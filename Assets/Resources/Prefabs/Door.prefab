@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 4450843990141267373}
   m_Layer: 0
   m_Name: DoorPanelHighlight
-  m_TagString: Interactable
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,8 +324,8 @@ GameObject:
   - component: {fileID: 6587334680353714205}
   - component: {fileID: 2446215885881155909}
   m_Layer: 0
-  m_Name: VerticalDoor
-  m_TagString: Untagged
+  m_Name: Door
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 5814644949449959644}
   m_Layer: 0
   m_Name: DoorPanelHighlight
-  m_TagString: Interactable
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

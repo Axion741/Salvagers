@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class VerticalDoor : MonoBehaviour
+public class Door : MonoBehaviour
 {
     private Animator _anim;
 

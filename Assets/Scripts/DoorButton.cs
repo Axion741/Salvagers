@@ -1,14 +1,14 @@
 ﻿using Assets.Scripts;
 using UnityEngine;
 
-public class VerticalDoorButton : MonoBehaviour, IInteractable
+public class DoorButton : MonoBehaviour, IInteractable
 {
-    private VerticalDoor _parent;
+    private Door _parent;
     private SpriteRenderer _highlight;
 
     private void Awake()
     {
-        _parent = GetComponentInParent<VerticalDoor>();
+        _parent = GetComponentInParent<Door>();
         _highlight = gameObject.transform.Find("DoorPanelHighlight").GetComponent<SpriteRenderer>();
     }
 
