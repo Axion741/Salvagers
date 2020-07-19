@@ -23,7 +23,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Interactable")
+        if (collision.tag == "Interactable")
         {
             Debug.Log("Enter");
             if (collision.TryGetComponent<IInteractable>(out _currentTarget))
@@ -40,7 +40,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Exit");
+        Debug.Log ("Exit");
         if(collision.tag == "Interactable" && collision.GetComponent<IInteractable>() != null) 
         {
             if(collision.GetComponent<IInteractable>() == _currentTarget)
