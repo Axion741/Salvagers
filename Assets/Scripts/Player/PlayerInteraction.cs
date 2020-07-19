@@ -26,15 +26,22 @@ public class PlayerInteraction : MonoBehaviour
         if(collision.tag == "Interactable")
         {
             Debug.Log("Enter");
-            _currentTarget = collision.GetComponent<IInteractable>();
-            _currentTarget.HighlightObject(true);
+            if (collision.TryGetComponent<IInteractable>(out _currentTarget))
+            {
+                _currentTarget.HighlightObject(true);
+            }
+            else
+            {
+                Debug.LogError($"{collision.name} interaction not implemented.");
+            }
+            
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("Exit");
-        if(collision.tag == "Interactable")
+        if(collision.tag == "Interactable" && collision.GetComponent<IInteractable>() != null) 
         {
             if(collision.GetComponent<IInteractable>() == _currentTarget)
             {

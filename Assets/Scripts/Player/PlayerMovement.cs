@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-
     private Rigidbody2D _rb;
     private Camera _cam;
 
+    private float moveSpeed = 5f;
     private float _xMovement;
     private float _yMovement;
     private float _mouseZ = 5.23f;
@@ -37,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rb.velocity = new Vector2(_xMovement, _yMovement).normalized * moveSpeed; //.normalized stops diagonal movement being faster
+        var normalizedVelocity = new Vector2(_xMovement, _yMovement).normalized; //.normalized stops diagonal movement being faster
+        _rb.velocity = normalizedVelocity * moveSpeed; 
     }
 
     private void RotateToMouse()
@@ -49,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         _mousePosition.x = _mousePosition.x - _currentPosition.x;
         _mousePosition.y = _mousePosition.y - _currentPosition.y;
 
-        _turnAngle = Mathf.Atan2(_mousePosition.y, _mousePosition.x) * Mathf.Rad2Deg;
+        _turnAngle = Mathf.Atan2(_mousePosition.y, _mousePosition.x) * Mathf.Rad2Deg + 90;
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _turnAngle));
     }
 
