@@ -1,33 +1,28 @@
 ﻿using Assets.Scripts;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class PowerConduit : MonoBehaviour, IInteractable
 {
-    private GameObject _highlight;
-    private SpriteRenderer _leftCore;
-    private SpriteRenderer _rightCore;
+    private SpriteRenderer _highlight;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
-        _highlight = gameObject.transform.Find("InteractionHalo").gameObject;
-        _highlight.SetActive(false);
+        _highlight = gameObject.transform.Find("InteractionHalo").GetComponent<SpriteRenderer>();
 
-        _leftCore = gameObject.transform.Find("Conduit/LeftCore").GetComponent<SpriteRenderer>();
-        _rightCore = gameObject.transform.Find("Conduit/RightCore").GetComponent<SpriteRenderer>();
+        _spriteRenderer = gameObject.transform.Find("Image").GetComponent<SpriteRenderer>();
     }
 
     public void HighlightObject(bool enabled)
     {
-        _highlight.SetActive(enabled);
+        _highlight.enabled = enabled;
     }
 
     public void UseObject()
     {
-        Debug.Log("Power Conduit Used");
-
-        _leftCore.color = Color.green;
-        _rightCore.color = Color.green;
-
+        
+        _spriteRenderer.sprite = Resources.Load("Sprites/Interactables/ConduitOn", typeof(Sprite)) as Sprite;
         gameObject.tag = "Environment";
 
         HighlightObject(false);
