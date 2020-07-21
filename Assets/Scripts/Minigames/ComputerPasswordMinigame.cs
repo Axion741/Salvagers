@@ -30,6 +30,14 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
         _input.Select();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            ProcessInput();
+        }
+    }
+
     public void SetParent(Computer parent)
     {
         _parent = parent;
@@ -37,12 +45,15 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
 
     public void ProcessInput()
     {
-        _input.DeactivateInputField();
-        _loginText.color = Color.green;
-        _loginText.text = "PROCESSING...";
+        if (!_closing)
+        {
+            _input.DeactivateInputField();
+            _loginText.color = Color.green;
+            _loginText.text = "PROCESSING...";
 
-        var checkPassCor = CheckPassword(3f);
-        StartCoroutine(checkPassCor);
+            var checkPassCor = CheckPassword(3f);
+            StartCoroutine(checkPassCor);
+        }
     }
 
     private IEnumerator CheckPassword(float timescale)
