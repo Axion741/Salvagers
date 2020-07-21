@@ -56,6 +56,12 @@ TagManager:
   - name: InteractableLayer
     uniqueID: 3065930055
     locked: 0
+  - name: PlayerLayer
+    uniqueID: 1500894017
+    locked: 0
   - name: WallLayer
     uniqueID: 1804633719
+    locked: 0
+  - name: SceneLabelLayer
+    uniqueID: 1463980117
     locked: 0
