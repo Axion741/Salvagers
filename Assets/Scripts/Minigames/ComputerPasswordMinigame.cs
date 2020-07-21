@@ -14,6 +14,7 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
 
     private string _correctPassword = "PASSWORD";
     private bool _closing = false;
+    private bool _success = false;
 
     private void Awake()
     {
@@ -93,6 +94,7 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
         }
 
         _downloadText.text = "COMPLETE";
+        _success = true;
 
         var completeCor = CompleteDownload(2f);
         StartCoroutine(completeCor);
@@ -103,7 +105,7 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
         yield return new WaitForSecondsRealtime(timescale);
 
         Time.timeScale = 1;
-        _parent.MinigameResult(true);
+        _parent.MinigameResult(_success);
         Destroy(gameObject);
 
     }
@@ -113,7 +115,7 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
         _closing = true;
         Time.timeScale = 1;
 
-        _parent.MinigameResult(false);
+        _parent.MinigameResult(_success);
         Destroy(gameObject);
     }
     
