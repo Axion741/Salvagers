@@ -18,15 +18,15 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
 
     private void Awake()
     {
-        _input = GameObject.Find("InputField").GetComponent<InputField>();
-        _loginText = GameObject.Find("LoginResult").GetComponent<Text>();
-        _downloadText = GameObject.Find("DownloadResult").GetComponent<Text>();
-
         Time.timeScale = 0;
     }
 
     private void Start()
     {
+        _input = GameObject.Find("InputField").GetComponent<InputField>();
+        _loginText = GameObject.Find("LoginResult").GetComponent<Text>();
+        _downloadText = GameObject.Find("DownloadResult").GetComponent<Text>();
+
         _input.Select();
     }
 
