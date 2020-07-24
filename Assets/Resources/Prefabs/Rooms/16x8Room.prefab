@@ -1739,7 +1739,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1804633719
-  m_SortingLayer: 6
+  m_SortingLayer: 5
   m_SortingOrder: 400
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -2850,6 +2850,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NDoorFiller
+      objectReference: {fileID: 0}
+    - target: {fileID: 2449197938948641967, guid: b0c39317d60182b41ba738302fa75ec5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5159887902370908657, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}

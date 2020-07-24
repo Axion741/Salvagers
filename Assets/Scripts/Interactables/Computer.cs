@@ -16,6 +16,7 @@ public class Computer : MonoBehaviour, IInteractable
         _appropriateMinigames = Resources.LoadAll<GameObject>("Prefabs/Minigames/Computer");
         _selectedMinigame = _appropriateMinigames[Random.Range(0, _appropriateMinigames.Length)];
     }
+
     public void HighlightObject(bool enabled)
     {
         _highlight.enabled = enabled;

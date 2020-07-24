@@ -572,13 +572,13 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _parent.MinigameResult(_success);
         Destroy(gameObject);
     }
-}
 
-public class Connection : MonoBehaviour
-{
-    public string ip;
-    public string status;
-    public bool ownIP;
-    public Text ipText;
-    public Text statusText;
+    private class Connection : MonoBehaviour
+    {
+        public string ip;
+        public string status;
+        public bool ownIP;
+        public Text ipText;
+        public Text statusText;
+    }
 }
