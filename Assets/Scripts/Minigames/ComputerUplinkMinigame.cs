@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -228,11 +227,11 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
                 }
                 else if (inputCommands[0] == _commands[2])
                 {
-                    //Disconnect
+                    StartCoroutine(Disconnect(inputCommands[1]));
                 }
                 else if (inputCommands[0] == _commands[3])
                 {
-                    //Repair
+                    StartCoroutine(Repair(inputCommands[1]));
                 }
                 break;
 
@@ -267,6 +266,7 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _usbUIElements.SetActive(true);
 
         _inputEnabled = true;
+        _input.Select();
     }
 
     private IEnumerator Connect(string ip)
@@ -283,9 +283,10 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             UpdateUSBConditions();
 
             _inputEnabled = true;
-        }
+            _input.Select();
 
-        if (connection.status == _connectionTypes[1])
+        }
+        else if (connection.status == _connectionTypes[1])
         {
             var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
             StartCoroutine(conStatusCor);
@@ -296,9 +297,9 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             UpdateUSBConditions();
 
             _inputEnabled = true;
+            _input.Select();
         }
-
-        if (connection.status == _connectionTypes[2])
+        else if (connection.status == _connectionTypes[2])
         {
             var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[0], Random.Range(0.5f, 3f));
             StartCoroutine(conStatusCor);
@@ -308,6 +309,112 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             UpdateUSBConditions();
 
             _inputEnabled = true;
+            _input.Select();
+        }
+    }
+
+    private IEnumerator Disconnect(string ip)
+    {
+        var connection = _connections.Where(w => w.ip == ip).Single();
+
+        if (connection.status == _connectionTypes[0])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[2], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+            _input.Select();
+        }
+        else if (connection.status == _connectionTypes[1])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            DisplayError("UNABLE TO DISCONNECT");
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+            _input.Select();
+        }
+        else if (connection.status == _connectionTypes[2])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            DisplayError("ERROR DISCONNECTING");
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+            _input.Select();
+        }
+    }
+
+    private IEnumerator Repair(string ip)
+    {
+        var connection = _connections.Where(w => w.ip == ip).Single();
+
+        Debug.Log("REPAIR");
+
+        if (connection.status == _connectionTypes[0])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            DisplayError("REPAIR FAILED");
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+            _input.Select();
+        }
+        else if (connection.status == _connectionTypes[1])
+        {
+            var random = Random.Range(1, 3);
+            Debug.Log(random);
+
+            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[random], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            if (random == 1)
+            {
+                DisplayError("REPAIR INCOMPLETE");
+                Debug.Log("incomplete");
+            }
+            else
+            {
+                DisplayError("REPAIR COMPLETE");
+                Debug.Log("complete");
+            }
+
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+            _input.Select();
+            
+        }
+        else if (connection.status == _connectionTypes[2])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            DisplayError("REPAIR FAILED");
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+            _input.Select();
         }
     }
 
