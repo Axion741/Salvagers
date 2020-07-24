@@ -19,12 +19,12 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
     private Text _noteText;
     private GameObject _usbUIElements;
     private Text[] _usbTexts;
+    private Text _usbSuccessText;
     private Image[] _usbLights;
     private Sprite[] _lightSprites;
 
     private List<Connection> _connections = new List<Connection>();
     private string _ownIP;
-    private bool _inputEnabled = true;
     private int _maxConnections;
     private bool _success = false;
 
@@ -90,6 +90,7 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _noteText = GameObject.Find("NoteText").GetComponent<Text>();
         _usbUIElements = GameObject.Find("USBUI");
         _usbTexts = GameObject.Find("USBUI").GetComponentsInChildren<Text>();
+        _usbSuccessText = GameObject.Find("SuccessText").GetComponent<Text>();
         _usbLights = GameObject.Find("Lights").GetComponentsInChildren<Image>();
         _lightSprites = Resources.LoadAll<Sprite>("Sprites/Environment/lights");
 
@@ -108,11 +109,12 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _noteText.text = _ownIP;
 
         _input.Select();
+        _input.ActivateInputField();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) && _inputEnabled)
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             ProcessInput();
         }
@@ -160,13 +162,13 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
     private void ProcessInput()
     {
-        _inputEnabled = false;
+        _input.enabled = false;
 
         if (string.IsNullOrWhiteSpace(_input.text))
         {
             DisplayError("NO INPUT");
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
             _input.ActivateInputField();
 
@@ -182,8 +184,9 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
                 {
                     DisplayError("IP REQUIRED");
 
-                    _inputEnabled = true;
+                    _input.enabled = true;
                     _input.Select();
+                    _input.ActivateInputField();
 
                     return;
                 }
@@ -195,8 +198,9 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
                 {
                     DisplayError("INVALID COMMAND");
 
-                    _inputEnabled = true;
+                    _input.enabled = true;
                     _input.Select();
+                    _input.ActivateInputField();
 
                     return;
                 }
@@ -207,8 +211,9 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
                 {
                     DisplayError("INVALID COMMAND");
 
-                    _inputEnabled = true;
+                    _input.enabled = true;
                     _input.Select();
+                    _input.ActivateInputField();
 
                     return;
                 }
@@ -216,8 +221,9 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
                 {
                     DisplayError("IP NOT FOUND");
 
-                    _inputEnabled = true;
+                    _input.enabled = true;
                     _input.Select();
+                    _input.ActivateInputField();
 
                     return;
                 }
@@ -238,8 +244,9 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             default:
                 DisplayError("INVALID COMMAND");
 
-                _inputEnabled = true;
+                _input.enabled = true;
                 _input.Select();
+                _input.ActivateInputField();
 
                 return;
         }
@@ -256,165 +263,173 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             connection.ipText.text = connection.ip;
             connection.ipText.enabled = true;
 
-            var conStatusCor = SetConnectionStatus(connection, "SCANNING", connection.status, Random.Range(0.5f, 3f));
+            var random = Random.Range(0.5f, 3f);
+
+            var conStatusCor = SetConnectionStatus(connection, "SCANNING", connection.status, random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(Random.Range(0.2f, 1f));
+            yield return new WaitForSecondsRealtime(0.5f);
         }
 
         UpdateUSBConditions();
         _usbUIElements.SetActive(true);
 
-        _inputEnabled = true;
+        _input.enabled = true;
         _input.Select();
+        _input.ActivateInputField();
     }
 
     private IEnumerator Connect(string ip)
     {
         var connection = _connections.Where(w => w.ip == ip).Single();
+        var random = Random.Range(0.5f, 3f);
 
         if (connection.status == _connectionTypes[0])
         {
-            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
-
+            _input.ActivateInputField();
         }
         else if (connection.status == _connectionTypes[1])
         {
-            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             DisplayError("CONNECTION ERROR");
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
         else if (connection.status == _connectionTypes[2])
         {
-            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[0], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[0], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
     }
 
     private IEnumerator Disconnect(string ip)
     {
         var connection = _connections.Where(w => w.ip == ip).Single();
+        var random = Random.Range(0.5f, 3f);
 
         if (connection.status == _connectionTypes[0])
         {
-            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[2], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[2], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
         else if (connection.status == _connectionTypes[1])
         {
-            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[1], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             DisplayError("UNABLE TO DISCONNECT");
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
         else if (connection.status == _connectionTypes[2])
         {
-            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "DISCONNECTING", _connectionTypes[1], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             DisplayError("ERROR DISCONNECTING");
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
     }
 
     private IEnumerator Repair(string ip)
     {
         var connection = _connections.Where(w => w.ip == ip).Single();
-
-        Debug.Log("REPAIR");
+        var random = Random.Range(0.5f, 3f);
 
         if (connection.status == _connectionTypes[0])
         {
-            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[1], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             DisplayError("REPAIR FAILED");
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
         else if (connection.status == _connectionTypes[1])
         {
-            var random = Random.Range(1, 3);
-            Debug.Log(random);
+            var randomSuccess = Random.Range(1, 3);
 
-            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[random], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[randomSuccess], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
-            if (random == 1)
+            if (randomSuccess == 1)
             {
                 DisplayError("REPAIR INCOMPLETE");
-                Debug.Log("incomplete");
             }
             else
             {
                 DisplayError("REPAIR COMPLETE");
-                Debug.Log("complete");
             }
 
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
-            
+            _input.ActivateInputField();
         }
         else if (connection.status == _connectionTypes[2])
         {
-            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "REPAIRING", _connectionTypes[1], random);
             StartCoroutine(conStatusCor);
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(random);
 
             DisplayError("REPAIR FAILED");
             UpdateUSBConditions();
 
-            _inputEnabled = true;
+            _input.enabled = true;
             _input.Select();
+            _input.ActivateInputField();
         }
     }
 
@@ -497,7 +512,41 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             uplinkPass = true;
         }
 
-        _success = bandwidthPass && errorsPass && uplinkPass;
+        if (bandwidthPass && errorsPass && uplinkPass)
+        {
+            StartCoroutine(SuccessfulUplink());
+        }
+    }
+
+    private IEnumerator SuccessfulUplink()
+    {
+        _input.enabled = false;
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        foreach (var text in _usbTexts)
+        {
+            text.enabled = false;
+        }
+
+        _usbSuccessText.color = Color.green;
+        _usbSuccessText.enabled = true;
+
+        for (int i = 0; i < 4; i++)
+        {
+            yield return new WaitForSecondsRealtime(0.4f);
+
+            _usbSuccessText.enabled = false;
+
+            yield return new WaitForSecondsRealtime(0.4f);
+
+            _usbSuccessText.enabled = true;
+        }
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        _success = true;
+        CloseWindow();
     }
 
     private void DisplayError(string error)
