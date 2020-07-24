@@ -25,7 +25,6 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
     private List<Connection> _connections = new List<Connection>();
     private string _ownIP;
-    private bool _scanned = false;
     private bool _inputEnabled = true;
     private int _maxConnections;
     private bool _success = false;
@@ -78,8 +77,6 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
     {
         Time.timeScale = 0;
         _maxConnections = Random.Range(1, 5);
-
-        CreateConnections();
     }
 
     private void Start()
@@ -101,13 +98,15 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _usbUIElements.SetActive(false);
         _usb.SetActive(false);
         _maxConnectionText.text = _maxConnections.ToString();
-        _noteText.text = _ownIP;
 
         for(var x = 0; x < 4; x++)
         {
             _ipTexts[x].enabled = false;
             _connectionTexts[x].enabled = false;
         }
+
+        CreateConnections();
+        _noteText.text = _ownIP;
 
         _input.Select();
     }
@@ -136,13 +135,18 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             _possibleIPs.RemoveAt(random);
         }
 
+        var x = 0;
+
         foreach (var ip in ipList)
         {
             _connections.Add(new Connection()
             {
                 ip = ip,
-                status = _connectionTypes[Random.Range(0, _connectionTypes.Count)]
-            }); 
+                status = _connectionTypes[Random.Range(0, _connectionTypes.Count)],
+                ipText = _ipTexts[x],
+                statusText = _connectionTexts[x]
+            });
+            x++;
         }
 
         var ownConnection = Random.Range(0, _connections.Count);
@@ -165,49 +169,80 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
             _inputEnabled = true;
             _input.Select();
+            _input.ActivateInputField();
 
             return;
         }
 
         var inputCommands = _input.text.Split(' ');
 
-        if (!_scanned || inputCommands.Length > 2)
+        switch (inputCommands.Length) 
         {
-            if(inputCommands.Length > 1 || inputCommands[0] != _commands[0])
-            {
+            case 1:
+                if (_commands.Contains(inputCommands[0]) && inputCommands[0] != _commands[0])
+                {
+                    DisplayError("IP REQUIRED");
+
+                    _inputEnabled = true;
+                    _input.Select();
+
+                    return;
+                }
+                else if (inputCommands[0] == _commands[0])
+                {
+                    StartCoroutine(Scan());
+                }
+                else if (!_commands.Contains(inputCommands[0]))
+                {
+                    DisplayError("INVALID COMMAND");
+
+                    _inputEnabled = true;
+                    _input.Select();
+
+                    return;
+                }
+                break;
+
+            case 2:
+                if (inputCommands[0] == _commands[0] || !_commands.Contains(inputCommands[0]))
+                {
+                    DisplayError("INVALID COMMAND");
+
+                    _inputEnabled = true;
+                    _input.Select();
+
+                    return;
+                }
+                else if (_connections.Where(w => w.ip == inputCommands[1]).Count() == 0)
+                {
+                    DisplayError("IP NOT FOUND");
+
+                    _inputEnabled = true;
+                    _input.Select();
+
+                    return;
+                }
+                else if (inputCommands[0] == _commands[1])
+                {
+                    StartCoroutine(Connect(inputCommands[1]));
+                }
+                else if (inputCommands[0] == _commands[2])
+                {
+                    //Disconnect
+                }
+                else if (inputCommands[0] == _commands[3])
+                {
+                    //Repair
+                }
+                break;
+
+            default:
                 DisplayError("INVALID COMMAND");
 
                 _inputEnabled = true;
                 _input.Select();
 
                 return;
-            }
-        }
-        else if (_connections.Select(s => s.ip == inputCommands[1]).Count() > 0)
-        {
-            DisplayError("IP NOT FOUND");
-
-            _inputEnabled = true;
-            _input.Select();
-
-            return;
-        }
-
-        if (inputCommands[0] == _commands[0])
-        {
-            StartCoroutine(Scan());
-        }
-        else if (inputCommands[0] == _commands[1])
-        {
-            //Connect
-        }
-        else if (inputCommands[0] == _commands[2])
-        {
-            //Disconnect
-        }
-        else if (inputCommands[0] == _commands[3])
-        {
-            //Repair
         }
     }
 
@@ -217,12 +252,12 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
         _uiElements.SetActive(true);
 
-        for (var x = 0; x < 4; x++)
+        foreach (var connection in _connections)
         {
-            _ipTexts[x].text = _connections[x].ip;
-            _ipTexts[x].enabled = true;
+            connection.ipText.text = connection.ip;
+            connection.ipText.enabled = true;
 
-            var conStatusCor = SetConnectionStatus(_connections[x], _connectionTexts[x], "SCANNING", _connections[x].status, Random.Range(0.5f, 3f));
+            var conStatusCor = SetConnectionStatus(connection, "SCANNING", connection.status, Random.Range(0.5f, 3f));
             StartCoroutine(conStatusCor);
 
             yield return new WaitForSecondsRealtime(Random.Range(0.2f, 1f));
@@ -234,14 +269,56 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _inputEnabled = true;
     }
 
-    private IEnumerator SetConnectionStatus(Connection connection, Text connectionText, string transitionText, string newStatus, float timescale)
+    private IEnumerator Connect(string ip)
     {
-        connectionText.text = transitionText;
-        connectionText.enabled = true;
+        var connection = _connections.Where(w => w.ip == ip).Single();
+
+        if (connection.status == _connectionTypes[0])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+        }
+
+        if (connection.status == _connectionTypes[1])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[1], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            DisplayError("CONNECTION ERROR");
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+        }
+
+        if (connection.status == _connectionTypes[2])
+        {
+            var conStatusCor = SetConnectionStatus(connection, "CONNECTING", _connectionTypes[0], Random.Range(0.5f, 3f));
+            StartCoroutine(conStatusCor);
+
+            yield return new WaitForSecondsRealtime(3f);
+
+            UpdateUSBConditions();
+
+            _inputEnabled = true;
+        }
+    }
+
+    private IEnumerator SetConnectionStatus(Connection connection, string transitionText, string newStatus, float timescale)
+    {
+        connection.statusText.text = transitionText;
+        connection.statusText.enabled = true;
 
         yield return new WaitForSecondsRealtime(timescale);
 
-        connectionText.text = newStatus;
+        connection.statusText.text = newStatus;
         connection.status = newStatus;
     }
 
@@ -288,7 +365,7 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
             errorsPass = true;
         }
 
-        if (_connections.Where(w => w.ownIP == true).Single().status != _connectionTypes[1])
+        if (_connections.Where(w => w.ownIP == true).Single().status != _connectionTypes[0])
         {
             _usbTexts[2].text = "No Uplink";
             _usbTexts[2].color = Color.red;
@@ -296,7 +373,7 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
             uplinkPass = false;
         }
-        else if (_connections.Where(w => w.ownIP == true).Single().status == _connectionTypes[1] && (bandwidthPass != true || errorsPass != true))
+        else if (_connections.Where(w => w.ownIP == true).Single().status == _connectionTypes[0] && (bandwidthPass != true || errorsPass != true))
         {
             _usbTexts[2].text = "Uplink Unstable";
             _usbTexts[2].color = Color.red;
@@ -332,57 +409,6 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         _errorText.enabled = false;
     }
 
-    //private void InitializeFields()
-    //{
-    //    _ownIP = _possibleOwnIPs[Random.Range(0, _possibleOwnIPs.Count)];
-
-    //    var ipStrings = new List<string> {_ownIP};
-
-    //    while (ipStrings.Count < 4)
-    //    {
-    //        var random = Random.Range(0, _possibleIPs.Count);
-    //        ipStrings.Add(_possibleIPs[random]);
-    //        _possibleIPs.RemoveAt(random);
-    //    }
-
-    //    ipStrings = ipStrings.OrderBy(i => System.Guid.NewGuid()).ToList();
-
-    //    for (var i = 0; i < _ips.Length; i++)
-    //    {
-    //        _ips[i].text = ipStrings[i];
-
-    //        if(ipStrings[i] == _ownIP)
-    //        {
-    //            _ownIPObject = _connections[i];
-    //            _noteText.text = _ownIP;
-    //            _connections[i].text = "DISCONNECTED";
-    //            _connections[i].color = Color.red;
-    //        }
-    //        else
-    //        {
-    //            switch (Random.Range(0, 3)) 
-    //            {
-    //                case 0:
-    //                    _connections[i].text = "DISCONNECTED";
-    //                    _connections[i].color = Color.red;
-    //                    break;
-
-    //                case 1:
-    //                    _connections[i].text = "CONNECTED";
-    //                    _connections[i].color = Color.green;
-    //                    break;
-
-    //                case 2:
-    //                    _connections[i].text = "ERROR";
-    //                    _connections[i].color = Color.red;
-    //                    break;
-    //            }
-    //        }
-    //    }
-
-    //    _input.Select();
-    //}
-
     public void CloseWindow()
     {
         Time.timeScale = 1;
@@ -397,4 +423,6 @@ public class Connection : MonoBehaviour
     public string ip;
     public string status;
     public bool ownIP;
+    public Text ipText;
+    public Text statusText;
 }
