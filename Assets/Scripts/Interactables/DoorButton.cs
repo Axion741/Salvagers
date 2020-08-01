@@ -1,14 +1,15 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.WorldObjects;
 using UnityEngine;
 
 public class DoorButton : MonoBehaviour, IInteractable
 {
-    private Door _parent;
+    private IDoor _parent;
     private SpriteRenderer _highlight;
 
     private void Awake()
     {
-        _parent = GetComponentInParent<Door>();
+        this.gameObject.transform.parent.gameObject.TryGetComponent(out _parent);
         _highlight = gameObject.transform.Find("DoorPanelHighlight").GetComponent<SpriteRenderer>();
     }
 

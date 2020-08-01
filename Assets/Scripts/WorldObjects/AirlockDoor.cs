@@ -1,12 +1,10 @@
 ﻿using Assets.Scripts.WorldObjects;
 using UnityEngine;
-using UnityEngine.U2D;
 
-public class Door : MonoBehaviour, IDoor
+public class AirlockDoor : MonoBehaviour, IDoor
 {
     private Animator _anim;
-    private SpriteRenderer _wDoorPanel;
-    private SpriteRenderer _eDoorPanel;
+    private SpriteRenderer _doorPanel;
     private Sprite _openPanel;
     private Sprite _closedPanel;
 
@@ -20,8 +18,7 @@ public class Door : MonoBehaviour, IDoor
 
     private void Start()
     {
-        _wDoorPanel = gameObject.transform.Find("WDoorPanel").GetComponent<SpriteRenderer>();
-        _eDoorPanel = gameObject.transform.Find("EDoorPanel").GetComponent<SpriteRenderer>();
+        _doorPanel = gameObject.transform.Find("DoorPanel").GetComponent<SpriteRenderer>();
         Sprite[] _atlas = Resources.LoadAll<Sprite>("Sprites/Interactables/doorButtons");
         _openPanel = _atlas[0];
         _closedPanel = _atlas[1];
@@ -47,14 +44,11 @@ public class Door : MonoBehaviour, IDoor
     {
         if (_doorState)
         {
-            _wDoorPanel.sprite = _openPanel;
-            _eDoorPanel.sprite = _openPanel;
+            _doorPanel.sprite = _openPanel;
         }
         else
         {
-            _wDoorPanel.sprite = _closedPanel;
-            _eDoorPanel.sprite = _closedPanel;
+            _doorPanel.sprite = _closedPanel;
         }
     }
-
 }
