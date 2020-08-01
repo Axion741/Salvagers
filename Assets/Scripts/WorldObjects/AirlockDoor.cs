@@ -34,7 +34,6 @@ public class AirlockDoor : MonoBehaviour, IDoor
         {
             if (!_dockedDoor.doorSeal)
             {
-                Debug.Log("Door Seal Broken");
                 doorSeal = false;
                 CloseDoor();
                 _dockedDoor = null;
@@ -46,8 +45,6 @@ public class AirlockDoor : MonoBehaviour, IDoor
     {
         if (collision.tag == "Airlock")
         {
-            Debug.Log("Airlock Trigger");
-            Debug.Log(collision);
             doorSeal = true;
             _dockedDoor = collision.gameObject.GetComponent<AirlockDoor>();
         }
