@@ -27,20 +27,32 @@ public class Door : MonoBehaviour, IDoor
         _closedPanel = _atlas[1];
     }
 
+    private void OpenDoor()
+    {
+        _anim.SetBool("Open", true);
+        _doorState = true;
+
+        SetPanelSprites();
+    }
+
+    private void CloseDoor()
+    {
+        _anim.SetBool("Open", false);
+        _doorState = false;
+
+        SetPanelSprites();
+    }
+
     public void ToggleDoor()
     {
         if (_doorState == false)
         {
-            _anim.SetBool("Open", true);
-            _doorState = true;
+            OpenDoor();
         }
         else
         {
-            _anim.SetBool("Open", false);
-            _doorState = false;
+            CloseDoor();
         }
-
-        SetPanelSprites();
     }
 
     public void SetPanelSprites()
