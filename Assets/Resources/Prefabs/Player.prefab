@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 1500958210887902865}
   - component: {fileID: 3061645075770231305}
   m_Layer: 0
-  m_Name: Point Light 2D (1)
+  m_Name: PlayerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 7896161658379965574}
   - component: {fileID: 3206741672482123532}
   m_Layer: 0
-  m_Name: Point Light 2D
+  m_Name: FlashLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 0.453
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 91
   m_PointLightOuterAngle: 113
