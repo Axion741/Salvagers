@@ -1,12 +1,14 @@
 ﻿using Assets.Scripts.WorldObjects;
 using UnityEngine;
-using UnityEngine.U2D;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Door : MonoBehaviour, IDoor
 {
     private Animator _anim;
     private SpriteRenderer _wDoorPanel;
     private SpriteRenderer _eDoorPanel;
+    private Light2D _wDoorLight;
+    private Light2D _eDoorLight;
     private Sprite _openPanel;
     private Sprite _closedPanel;
 
@@ -20,11 +22,19 @@ public class Door : MonoBehaviour, IDoor
 
     private void Start()
     {
-        _wDoorPanel = gameObject.transform.Find("WDoorPanel").GetComponent<SpriteRenderer>();
-        _eDoorPanel = gameObject.transform.Find("EDoorPanel").GetComponent<SpriteRenderer>();
+        var wPanel = gameObject.transform.Find("WDoorPanel");
+        var ePanel = gameObject.transform.Find("EDoorPanel");
+
+        _wDoorPanel = wPanel.GetComponent<SpriteRenderer>();
+        _eDoorPanel = ePanel.GetComponent<SpriteRenderer>();
+        _wDoorLight = wPanel.transform.Find("WDoorLight").GetComponent<Light2D>();
+        _eDoorLight = ePanel.transform.Find("EDoorLight").GetComponent<Light2D>();
+
         Sprite[] _atlas = Resources.LoadAll<Sprite>("Sprites/Interactables/doorButtons");
         _openPanel = _atlas[0];
         _closedPanel = _atlas[1];
+        _wDoorLight.color = Color.red;
+        _eDoorLight.color = Color.red;
     }
 
     private void OpenDoor()
@@ -60,12 +70,17 @@ public class Door : MonoBehaviour, IDoor
         if (_doorState)
         {
             _wDoorPanel.sprite = _openPanel;
+            _wDoorLight.color = Color.green;
             _eDoorPanel.sprite = _openPanel;
+            _eDoorLight.color = Color.green;
+
         }
         else
         {
             _wDoorPanel.sprite = _closedPanel;
+            _wDoorLight.color = Color.red;
             _eDoorPanel.sprite = _closedPanel;
+            _eDoorLight.color = Color.red;
         }
     }
 
