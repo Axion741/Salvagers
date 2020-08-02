@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 9134789212046421212}
   - component: {fileID: 2234829227258372371}
   - component: {fileID: 2676138076404992010}
+  - component: {fileID: 7735797891791905370}
   m_Layer: 0
   m_Name: PowerConduit
   m_TagString: Interactable
@@ -216,6 +217,7 @@ Transform:
   m_Children:
   - {fileID: 7668023006883673981}
   - {fileID: 40609784740686240}
+  - {fileID: 1046831355512043383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -362,3 +364,115 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
+--- !u!114 &7735797891791905370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140498833354736371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000fd76f2aad7d8466717be4e4e41d375594761beb655904257
+  m_ShapePath:
+  - {x: -0.38569173, y: -0.49677044, z: 0}
+  - {x: -0.35923228, y: -0.50930595, z: 0}
+  - {x: 0.3081623, y: -0.5089478, z: 0}
+  - {x: 0.33900514, y: -0.49520183, z: 0}
+  - {x: 0.35052374, y: -0.46993065, z: 0}
+  - {x: 0.34561568, y: 0.17743608, z: 0}
+  - {x: 0.28705817, y: 0.2721555, z: 0}
+  - {x: 0.15808189, y: 0.3115662, z: 0}
+  - {x: 0.07208717, y: 0.2926394, z: 0}
+  - {x: 0.030879624, y: 0.267698, z: 0}
+  - {x: -0.07485026, y: 0.2666136, z: 0}
+  - {x: -0.12473306, y: 0.29751924, z: 0}
+  - {x: -0.1887132, y: 0.30782112, z: 0}
+  - {x: -0.24510247, y: 0.3061945, z: 0}
+  - {x: -0.31396243, y: 0.2790843, z: 0}
+  - {x: -0.36231047, y: 0.2309517, z: 0}
+  - {x: -0.3963775, y: 0.13973773, z: 0}
+  - {x: -0.3976621, y: -0.47265768, z: 0}
+  m_ShapePathHash: -1185015949
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 147770
+--- !u!1 &8049875709202836378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1046831355512043383}
+  - component: {fileID: 1539427396217013317}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1046831355512043383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049875709202836378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.04, y: 0.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3248664257032278820}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1539427396217013317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049875709202836378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.9622642, g: 0.4493592, b: 0.4493592, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000fd76f2aad7d8466717be4e4e41d375594761beb655904257
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0.5
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0.18
+  m_PointLightOuterRadius: 0.5
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
