@@ -47,7 +47,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.9528302, g: 0.39101997, b: 0.39101997, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000fd76f2aad7d8466717be4e4e41d375594761beb655904257
   m_LightCookieSprite: {fileID: 0}
@@ -446,7 +446,7 @@ MonoBehaviour:
   - {x: -0.49748892, y: 0.048355054, z: 0}
   m_ShapePathHash: 1800409272
   m_Mesh: {fileID: 0}
-  m_InstanceId: 56744
+  m_InstanceId: 23518
 --- !u!1 &5298780565457608194
 GameObject:
   m_ObjectHideFlags: 0
