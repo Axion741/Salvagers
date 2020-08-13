@@ -172,9 +172,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1804633719
-  m_SortingLayer: 5
-  m_SortingOrder: 400
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -573,9 +573,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1426950403
-  m_SortingLayer: 1
-  m_SortingOrder: -400
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -943,9 +943,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1804633719
-  m_SortingLayer: 5
-  m_SortingOrder: 400
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -961,6 +961,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79844
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1041,6 +1046,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79852
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1191,6 +1201,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7341258472189807569, guid: 305f0bbc7edf7764388998879ed63ad6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79890
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 305f0bbc7edf7764388998879ed63ad6, type: 3}
 --- !u!4 &4378957150732352776 stripped
@@ -1206,6 +1221,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79902
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1286,6 +1306,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79910
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1366,6 +1391,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79918
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1446,6 +1476,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79926
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1526,6 +1561,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 3025398803707059322, guid: 67617dc16ad1201429ef15e5c868aee6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79976
+      objectReference: {fileID: 0}
     - target: {fileID: 3224006406400958499, guid: 67617dc16ad1201429ef15e5c868aee6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1586,6 +1626,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 4461928727007738160, guid: 67617dc16ad1201429ef15e5c868aee6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -79978
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67617dc16ad1201429ef15e5c868aee6, type: 3}
 --- !u!4 &5457312859287840941 stripped
@@ -1601,6 +1646,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -80006
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1761,6 +1811,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2097636137679067831}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -80020
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name

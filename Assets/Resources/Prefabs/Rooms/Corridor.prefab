@@ -570,9 +570,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1426950403
-  m_SortingLayer: 1
-  m_SortingOrder: -400
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.00041019917, y: 0.00041019917, z: 0}
   m_MaxChunkCount: 16
@@ -1101,9 +1101,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1804633719
-  m_SortingLayer: 5
-  m_SortingOrder: 400
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1119,6 +1119,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5103002320522397930}
     m_Modifications:
+    - target: {fileID: 3025398803707059322, guid: 67617dc16ad1201429ef15e5c868aee6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -85182
+      objectReference: {fileID: 0}
     - target: {fileID: 3224006406400958499, guid: 67617dc16ad1201429ef15e5c868aee6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1179,6 +1184,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 4461928727007738160, guid: 67617dc16ad1201429ef15e5c868aee6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -85184
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67617dc16ad1201429ef15e5c868aee6, type: 3}
 --- !u!4 &8903090244269861978 stripped
@@ -1194,6 +1204,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5103002320522397930}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -85212
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1274,6 +1289,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5103002320522397930}
     m_Modifications:
+    - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -85220
+      objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_Name
@@ -1354,6 +1374,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5103002320522397930}
     m_Modifications:
+    - target: {fileID: 3025398803707059322, guid: 67617dc16ad1201429ef15e5c868aee6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -85270
+      objectReference: {fileID: 0}
     - target: {fileID: 3224006406400958499, guid: 67617dc16ad1201429ef15e5c868aee6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1413,6 +1438,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461928727007738160, guid: 67617dc16ad1201429ef15e5c868aee6,
+        type: 3}
+      propertyPath: m_InstanceId
+      value: -85272
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67617dc16ad1201429ef15e5c868aee6, type: 3}

@@ -1,0 +1,13 @@
+﻿Default
+	-Background 0
+	-BackgroundShapes 5
+	-FloorTiles 10
+	-Dirt 15
+	-InteractionHalos 20
+	-Walls/Doors 25
+	-WallTilemap 30
+	-Interactables 35
+
+Player
+
+Scene labels
