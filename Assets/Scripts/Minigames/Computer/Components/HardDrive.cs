@@ -21,9 +21,18 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        if(_slider.value >= 1 && !_keepersPopped)
+        if (_keepersPopped)
+        {
+            return;
+        }
+        else if (_slider.value >= 1 && !_keepersPopped)
         {
             PopKeepers();
+            _slider.interactable = false;
+        }
+        else
+        {
+            _slider.value = Mathf.Lerp(_slider.value, 0, Time.fixedDeltaTime * 2);
         }
     }
 
