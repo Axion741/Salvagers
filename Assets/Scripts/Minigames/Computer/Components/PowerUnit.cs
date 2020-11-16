@@ -43,6 +43,10 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler
             {
                 light.enabled = false;
             }
+            foreach (var powerSwitch in _powerSwitches)
+            {
+                powerSwitch.switchEnabled = false;
+            }
         }
     }
 
