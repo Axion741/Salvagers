@@ -200,6 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ebab5fa80e57d4e873445a6fe54a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
 --- !u!1 &1000709460846645872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,6 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c57516ad5d8f734e8aa27315982c7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
   switchEnabled: 1
 --- !u!1 &3310950156065832675
 GameObject:
@@ -1846,6 +1848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ebab5fa80e57d4e873445a6fe54a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
 --- !u!1 &4062835844241933487
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,6 +2012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c57516ad5d8f734e8aa27315982c7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
   switchEnabled: 1
 --- !u!1 &4330289724487834606
 GameObject:
@@ -2098,6 +2102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ebab5fa80e57d4e873445a6fe54a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
 --- !u!1 &4412608643781247470
 GameObject:
   m_ObjectHideFlags: 0
@@ -2116,7 +2121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7666996369403241927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2694,6 +2699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ebab5fa80e57d4e873445a6fe54a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
 --- !u!1 &5298956551573374815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2934,6 +2940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24ebab5fa80e57d4e873445a6fe54a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
 --- !u!1 &6260465138598453797
 GameObject:
   m_ObjectHideFlags: 0
@@ -3699,6 +3706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c57516ad5d8f734e8aa27315982c7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDisabled: 0
   switchEnabled: 1
 --- !u!1 &8192390937855789743
 GameObject:
