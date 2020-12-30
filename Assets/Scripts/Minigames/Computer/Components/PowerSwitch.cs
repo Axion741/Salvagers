@@ -9,6 +9,7 @@ public class PowerSwitch : MonoBehaviour, IPointerClickHandler
     private Sprite _onSwitch;
     private Sprite _offSwitch;
 
+    public bool interactionDisabled;
     public bool switchEnabled = true;    
 
     private void Awake()
@@ -25,6 +26,11 @@ public class PowerSwitch : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (interactionDisabled) 
+        {
+            return;
+        }
+
         if (switchEnabled == true)
         {
             _offLight.enabled = !_offLight.enabled;

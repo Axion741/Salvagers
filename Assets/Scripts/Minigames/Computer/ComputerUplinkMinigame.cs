@@ -573,7 +573,7 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
         Destroy(gameObject);
     }
 
-    private class Connection : MonoBehaviour
+    private class Connection
     {
         public string ip;
         public string status;

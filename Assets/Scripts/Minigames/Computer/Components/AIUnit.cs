@@ -2,8 +2,9 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AIUnit : MonoBehaviour, IPointerClickHandler
+public class AIUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
+    private ComputerComponentMinigame _parent;
     private GameObject _rightKeeper;
     private GameObject _bottomKeeper;
     private AIButton _button;
@@ -13,6 +14,7 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler
     private Sprite _angryFace;
     private Image _progressBar;
 
+    private bool _interactionDisabled;
     private bool _keepersPopped;
     private int _progress = 0;
 
@@ -27,12 +29,18 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler
         _mediumFace = Resources.LoadAll<Sprite>("Sprites/Minigames/Computer/ComputerComponents/AI/Medium_Face")[0];
         _angryFace = Resources.LoadAll<Sprite>("Sprites/Minigames/Computer/ComputerComponents/AI/Angry_Face")[0];
         _progressBar = gameObject.transform.Find("BarBackground").gameObject.GetComponent<Image>();
+
+        if (_interactionDisabled)
+        {
+            _aiFace.enabled = false;
+            _progressBar.color = Color.black;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_keepersPopped)
+        if (_keepersPopped || _interactionDisabled)
         {
             return;
         }
@@ -62,7 +70,13 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler
             gameObject.transform.Find("Bar").GetComponent<Image>().enabled = false;
             gameObject.transform.Find("ScreenBackground").GetComponent<Image>().enabled = false;
             gameObject.transform.Find("Screen").GetComponent<Image>().enabled = false;
+            StartCoroutine(_parent.ReceiveSuccess());
         }
+    }
+
+    public void SetParent(ComputerComponentMinigame parent)
+    {
+        _parent = parent;
     }
 
     private void PopKeepers()
@@ -115,5 +129,10 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler
         {
             _progressBar.color = Color.black;
         }
+    }
+
+    public void DisableComponentInteraction()
+    {
+        _interactionDisabled = true;
     }
 }

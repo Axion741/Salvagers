@@ -3,13 +3,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PowerUnit : MonoBehaviour, IPointerClickHandler
+public class PowerUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
+    private ComputerComponentMinigame _parent;
+
     private List<Image> _offLights = new List<Image>();
     private List<PowerSwitch> _powerSwitches = new List<PowerSwitch>();
     private GameObject _leftKeeper;
     private GameObject _rightKeeper;
 
+    private bool _interactionDisabled;
     private bool _keepersPopped;
 
     // Start is called before the first frame update
@@ -24,10 +27,20 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler
         {
             _powerSwitches[i].SetPairedLight(_offLights[i]);
         }
+
+        if (_interactionDisabled)
+        {
+            DisableSwitches();
+        }
     }
 
     private void Update()
     {
+        if (_interactionDisabled)
+        {
+            return;
+        }
+
         if (AllLightsOff() && !_keepersPopped)
         {
             PopKeepers();
@@ -47,7 +60,13 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler
             {
                 powerSwitch.switchEnabled = false;
             }
+            StartCoroutine(_parent.ReceiveSuccess());
         }
+    }
+
+    public void SetParent(ComputerComponentMinigame parent)
+    {
+        _parent = parent;
     }
 
     private bool AllLightsOff()
@@ -71,5 +90,18 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler
         _leftKeeper.transform.localPosition = new Vector3(_leftKeeper.transform.localPosition.x - 25f, _leftKeeper.transform.localPosition.y, _leftKeeper.transform.localPosition.z);
         _rightKeeper.transform.localPosition = new Vector3(_rightKeeper.transform.localPosition.x + 25f, _rightKeeper.transform.localPosition.y, _rightKeeper.transform.localPosition.z);
         _keepersPopped = true;
+    }
+
+    private void DisableSwitches()
+    {
+        foreach (var pswitch in _powerSwitches)
+        {
+            pswitch.interactionDisabled = true;
+        }
+    }
+
+    public void DisableComponentInteraction()
+    {
+        _interactionDisabled = true;
     }
 }

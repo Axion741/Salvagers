@@ -16,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Nothing to interact with");
+                Debug.LogWarning("Nothing to interact with");
             }
         }
     }
@@ -38,14 +38,11 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.tag == "Interactable" && collision.GetComponent<IInteractable>() != null) 
+    { 
+        if(_currentTarget != null && collision.GetComponent<IInteractable>() == _currentTarget)
         {
-            if(collision.GetComponent<IInteractable>() == _currentTarget)
-            {
-                _currentTarget.HighlightObject(false);
-                _currentTarget = null;
-            }
+            _currentTarget.HighlightObject(false);
+            _currentTarget = null;
         }
     }
 }

@@ -3,8 +3,10 @@ using UnityEngine.EventSystems;
 
 public class Screw : MonoBehaviour, IPointerClickHandler
 {
+    public bool interactionDisabled;
     public void OnPointerClick(PointerEventData eventData)
     {
-        Destroy(gameObject);
+        if (!interactionDisabled)
+            Destroy(gameObject);
     }
 }

@@ -11,6 +11,9 @@ public class Computer : MonoBehaviour, IInteractable
     private Light2D _powerLight;
     private GameObject[] _appropriateMinigames;
     private GameObject _selectedMinigame;
+    private bool _componentMinigameSelected;
+    
+    public System.Type targetComponentType;
 
     private void Awake()
     {
@@ -21,7 +24,17 @@ public class Computer : MonoBehaviour, IInteractable
         _appropriateMinigames = Resources.LoadAll<GameObject>("Prefabs/Minigames/Computer");
         _selectedMinigame = _appropriateMinigames[Random.Range(0, _appropriateMinigames.Length)];
 
-        _powerLight.color = Color.green;
+        _componentMinigameSelected = _selectedMinigame.GetComponent<ComputerComponentMinigame>() != null;
+
+        if (_componentMinigameSelected)
+        {
+            _powerLight.color = Color.red;
+            _monitorLight.color = Color.red;
+        }
+        else
+        {
+            _powerLight.color = Color.green;
+        }
     }
 
     public void HighlightObject(bool enabled)
@@ -42,7 +55,16 @@ public class Computer : MonoBehaviour, IInteractable
         {
             _sprite.sprite = Resources.Load("Sprites/Interactables/ComputerOff", typeof(Sprite)) as Sprite;
             _monitorLight.enabled = false;
-            _powerLight.color = Color.red;
+
+            if (_componentMinigameSelected)
+            {
+                _powerLight.enabled = false;
+            }
+            else
+            {
+                _powerLight.color = Color.red;
+            }
+
             gameObject.tag = "Environment";
 
             HighlightObject(false);

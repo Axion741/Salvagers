@@ -2,12 +2,14 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HardDrive : MonoBehaviour, IPointerClickHandler
+public class HardDrive : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
+    private ComputerComponentMinigame _parent;
     private GameObject _topKeeper;
     private GameObject _bottomKeeper;
     private Slider _slider;
 
+    private bool _interactionDisabled;
     private bool _keepersPopped;
 
     // Start is called before the first frame update
@@ -21,6 +23,12 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
+        if (_interactionDisabled)
+        {
+            _slider.interactable = false;
+            return;
+        }
+
         if (_keepersPopped)
         {
             return;
@@ -41,7 +49,12 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler
         if (_keepersPopped)
         {
             gameObject.GetComponent<Image>().enabled = false;
+            StartCoroutine(_parent.ReceiveSuccess());
         }
+    }
+    public void SetParent(ComputerComponentMinigame parent)
+    {
+        _parent = parent;
     }
 
     private void PopKeepers()
@@ -51,5 +64,8 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler
         _keepersPopped = true;
     }
 
-
+    public void DisableComponentInteraction()
+    {
+        _interactionDisabled = true;
+    }
 }
