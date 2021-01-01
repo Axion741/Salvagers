@@ -16,9 +16,9 @@ public class SceneController : MonoBehaviour
     {
         SetupSingleton();
 
-        Invoke("LoadMainMenu", 5);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            Invoke("LoadMainMenu", 5);
     }
-
 
     private void OnEnable()
     {
