@@ -5,6 +5,7 @@ public class MainMenuController : MonoBehaviour
 {
     private SceneController _sceneController;
     private AudioController _audioController;
+    private SaveController _saveController;
 
     public GameObject mainMenuControls;
     public GameObject optionsMenuControls;
@@ -16,6 +17,7 @@ public class MainMenuController : MonoBehaviour
     {
         _sceneController = FindObjectOfType<SceneController>();
         _audioController = FindObjectOfType<AudioController>();
+        _saveController = FindObjectOfType<SaveController>();
         musicSlider.value = _audioController.musicVolume;
         sfxSlider.value = _audioController.sfxVolume;
     }
@@ -44,6 +46,7 @@ public class MainMenuController : MonoBehaviour
     {
         mainMenuControls.SetActive(true);
         optionsMenuControls.SetActive(false);
+        _saveController.SaveGame();
     }
 
     public void QuitGame()

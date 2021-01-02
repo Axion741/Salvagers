@@ -185,6 +185,8 @@ GameObject:
   - component: {fileID: 6253029304367076778}
   - component: {fileID: 1201908293337165431}
   - component: {fileID: 5794439968797309030}
+  - component: {fileID: 2602289563027675420}
+  - component: {fileID: 842874069703883635}
   m_Layer: 0
   m_Name: MasterControllers
   m_TagString: Untagged
@@ -252,3 +254,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2602289563027675420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215241481939155335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b0dbe544bb5e94cb305dcaddc429de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &842874069703883635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215241481939155335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ff1cccdcb2e37549b292db4ed42ee83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -2,12 +2,15 @@
 
 public class AudioController : MonoBehaviour
 {
-    public float musicVolume;
-    public float sfxVolume;
+    private SaveController _saveController;
+
+    public float musicVolume = 0.5f;
+    public float sfxVolume = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
+        _saveController = FindObjectOfType<SaveController>();
         SetupSingleton();
         GetMusicVolume();
         GetSfxVolume();
@@ -27,23 +30,21 @@ public class AudioController : MonoBehaviour
 
     void GetMusicVolume()
     {
-        musicVolume = PlayerPrefs.GetFloat("musicVolume", 0.5f);
+        musicVolume = _saveController.saveModel.musicVolume;
     }
 
     public void SetMusicVolume(float volume)
     {
-        PlayerPrefs.SetFloat("musicVolume", volume);
         musicVolume = volume;
     }
 
     void GetSfxVolume()
     {
-        sfxVolume = PlayerPrefs.GetFloat("sfxVolume", 0.5f);
+        sfxVolume = _saveController.saveModel.sfxVolume;
     }
 
     public void SetSfxVolume(float volume)
     {
-        PlayerPrefs.SetFloat("sfxVolume", volume);
         sfxVolume = volume;
     }
 }
