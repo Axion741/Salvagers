@@ -58,7 +58,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 90
   m_TargetDisplay: 0
 --- !u!114 &2034757105652180517
 MonoBehaviour:
@@ -266,6 +266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b0dbe544bb5e94cb305dcaddc429de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  credits: 0
+  experience: 0
+  playerName: 
 --- !u!114 &842874069703883635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,3 +281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ff1cccdcb2e37549b292db4ed42ee83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveModel:
+    musicVolume: 0.5
+    sfxVolume: 0.5
+    credits: 0
+    experience: 0
+    playerName: 

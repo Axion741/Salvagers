@@ -3,17 +3,13 @@
 public class SaveController : MonoBehaviour
 {
     private AudioController _audioController;
+    private PlayerController _playerController;
 
     public SaveModel saveModel;
     private string saveFileName = "/SalvagersSave.json";
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        _audioController = FindObjectOfType<AudioController>();
-
-        SetupSingleton();
-
         if (DoesSaveFileExist() == true)
         {
             saveModel = LoadSaveModel();
@@ -21,8 +17,17 @@ public class SaveController : MonoBehaviour
         else
         {
             saveModel = CreateSaveModel();
-            SaveGame();
+            SaveGame(true);
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        SetupSingleton();
+
+        _audioController = FindObjectOfType<AudioController>();
+        _playerController = FindObjectOfType<PlayerController>();
     }
 
     void SetupSingleton()
@@ -46,6 +51,7 @@ public class SaveController : MonoBehaviour
 
     private SaveModel LoadSaveModel()
     {
+        //PersistantDataPath is AppData\LocalLow\Axion Softworks\Salvagers
         var json = System.IO.File.ReadAllText(Application.persistentDataPath + saveFileName);
 
         var save = JsonUtility.FromJson<SaveModel>(json);
@@ -60,6 +66,13 @@ public class SaveController : MonoBehaviour
             saveModel.musicVolume = _audioController.musicVolume;
             saveModel.sfxVolume = _audioController.sfxVolume;
         }
+
+        if (_playerController != null)
+        {
+            saveModel.credits = _playerController.credits;
+            saveModel.experience = _playerController.experience;
+            saveModel.playerName = _playerController.playerName;
+        }
     }
 
     private bool DoesSaveFileExist()
@@ -67,9 +80,11 @@ public class SaveController : MonoBehaviour
         return System.IO.File.Exists(Application.persistentDataPath + saveFileName);
     }
 
-    public void SaveGame()
+    public void SaveGame(bool isFirstTimeSaving = false)
     {
-        UpdateSaveModel();
+        //Initial load skips checking values and uses defaults only
+        if (!isFirstTimeSaving)
+            UpdateSaveModel();
 
         var json = JsonUtility.ToJson(saveModel);
 
