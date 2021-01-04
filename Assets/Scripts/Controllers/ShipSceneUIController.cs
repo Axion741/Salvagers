@@ -1,12 +1,18 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Minigames;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ShipSceneUIController : MonoBehaviour
 {
     private PlayerController _playerController;
+    private SceneController _sceneController;
 
     private bool _characterMenuIsOpen;
 
+    public bool escapeMenuIsOpen;
+
+    public GameObject escapeMenuPanel;
     public GameObject characterMenuPanel;
     public Text characterNameText;
     public Text characterCreditText;
@@ -16,6 +22,7 @@ public class ShipSceneUIController : MonoBehaviour
     void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
+        _sceneController = FindObjectOfType<SceneController>();
 
         characterNameText.text = _playerController.playerName;
         characterCreditText.text = _playerController.credits.ToString();
@@ -26,6 +33,9 @@ public class ShipSceneUIController : MonoBehaviour
     {
         if (Time.timeScale > 0 && Input.GetKeyDown(KeyCode.C))
             ToggleCharacterMenu();
+
+        if (Input.GetKeyDown(KeyCode.Escape) && escapeMenuIsOpen == false)
+            ToggleEscapeMenu();
     }
 
     public void ToggleCharacterMenu()
@@ -37,5 +47,32 @@ public class ShipSceneUIController : MonoBehaviour
             characterMenuPanel.SetActive(true);
 
         _characterMenuIsOpen = characterMenuPanel.activeSelf;
+    }
+
+    public void ToggleEscapeMenu()
+    {
+        if (escapeMenuIsOpen)
+        {
+            escapeMenuPanel.SetActive(false);
+
+            var openMinigame = FindObjectsOfType<MonoBehaviour>().OfType<IMinigame>();
+
+            if (openMinigame == null || openMinigame.Count() <= 0)
+                Time.timeScale = 1;
+        }
+            
+        else
+        {
+            escapeMenuPanel.SetActive(true);
+            Time.timeScale = 0;
+        }
+
+        escapeMenuIsOpen = escapeMenuPanel.activeSelf;
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1;
+        _sceneController.FadeToScene(1);
     }
 }

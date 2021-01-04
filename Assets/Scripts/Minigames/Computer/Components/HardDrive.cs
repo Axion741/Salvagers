@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class HardDrive : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
     private ComputerComponentMinigame _parent;
+    private ShipSceneUIController _shipSceneUIController;
     private GameObject _topKeeper;
     private GameObject _bottomKeeper;
     private Slider _slider;
@@ -15,6 +16,7 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler, IComputerComponent
     // Start is called before the first frame update
     void Start()
     {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _topKeeper = gameObject.transform.Find("Keepers/KeeperTop").gameObject;
         _bottomKeeper = gameObject.transform.Find("Keepers/KeeperBottom").gameObject;
         _slider = gameObject.transform.parent.Find("Slider").GetComponent<Slider>();
@@ -23,10 +25,16 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler, IComputerComponent
     // Update is called once per frame
     void Update()
     {
-        if (_interactionDisabled)
+        if (_interactionDisabled || _shipSceneUIController)
         {
-            _slider.interactable = false;
+            if (_slider.interactable == true)
+                _slider.interactable = false;
+
             return;
+        }
+        else if (_slider.interactable == false)
+        {
+            _slider.interactable = true;
         }
 
         if (_keepersPopped)
@@ -46,7 +54,7 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler, IComputerComponent
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_keepersPopped)
+        if (_keepersPopped && !_shipSceneUIController.escapeMenuIsOpen)
         {
             gameObject.GetComponent<Image>().enabled = false;
             StartCoroutine(_parent.ReceiveSuccess());

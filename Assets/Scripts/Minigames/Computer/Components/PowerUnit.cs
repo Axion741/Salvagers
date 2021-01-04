@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PowerUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
     private ComputerComponentMinigame _parent;
+    private ShipSceneUIController _shipSceneUIController;
 
     private List<Image> _offLights = new List<Image>();
     private List<PowerSwitch> _powerSwitches = new List<PowerSwitch>();
@@ -18,6 +19,7 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
     // Start is called before the first frame update
     void Start()
     {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _offLights.AddRange(gameObject.transform.Find("Lights").GetComponentsInChildren<Image>());
         _powerSwitches.AddRange(gameObject.GetComponentsInChildren<PowerSwitch>());
         _leftKeeper = gameObject.transform.Find("Keepers/KeeperLeft").gameObject;
@@ -36,7 +38,7 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 
     private void Update()
     {
-        if (_interactionDisabled)
+        if (_interactionDisabled || _shipSceneUIController.escapeMenuIsOpen)
         {
             return;
         }
@@ -49,7 +51,7 @@ public class PowerUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_keepersPopped)
+        if (_keepersPopped && !_shipSceneUIController.escapeMenuIsOpen)
         {
             gameObject.GetComponent<Image>().enabled = false;
             foreach (var light in _offLights)

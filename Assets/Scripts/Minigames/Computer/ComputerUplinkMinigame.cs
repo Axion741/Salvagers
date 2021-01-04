@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 {
+    private ShipSceneUIController _shipSceneUIController;
     private Computer _parent;
 
     private GameObject _usb;
@@ -80,6 +81,7 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
     private void Start()
     {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _usb = GameObject.Find("USB");
         _uiElements = GameObject.Find("UIElements");
         _ipTexts = GameObject.Find("TextIPs").GetComponentsInChildren<Text>();
@@ -114,6 +116,18 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
     private void Update()
     {
+        if (_shipSceneUIController.escapeMenuIsOpen)
+        {
+            if (_input.IsActive() == true)
+                _input.DeactivateInputField();
+
+            return;
+        }
+        else if (_input.IsActive() == false)
+        {
+            _input.ActivateInputField();
+        }
+
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             ProcessInput();

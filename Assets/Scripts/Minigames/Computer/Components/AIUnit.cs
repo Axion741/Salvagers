@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class AIUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
     private ComputerComponentMinigame _parent;
+    private ShipSceneUIController _shipSceneUIController;
     private GameObject _rightKeeper;
     private GameObject _bottomKeeper;
     private AIButton _button;
@@ -21,6 +22,7 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
     // Start is called before the first frame update
     void Start()
     {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _rightKeeper = gameObject.transform.Find("Keepers/KeeperRight").gameObject;
         _bottomKeeper = gameObject.transform.Find("Keepers/KeeperBottom").gameObject;
         _button = gameObject.transform.Find("AIButton").gameObject.GetComponent<AIButton>();
@@ -40,7 +42,7 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
     // Update is called once per frame
     void Update()
     {
-        if (_keepersPopped || _interactionDisabled)
+        if (_keepersPopped || _interactionDisabled || _shipSceneUIController.escapeMenuIsOpen)
         {
             return;
         }
@@ -62,7 +64,7 @@ public class AIUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (_keepersPopped)
+        if (_keepersPopped && !_shipSceneUIController.escapeMenuIsOpen)
         {
             gameObject.GetComponent<Image>().enabled = false;
             _button.GetComponent<Image>().enabled = false;

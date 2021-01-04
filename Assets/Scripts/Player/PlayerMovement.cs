@@ -40,15 +40,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotateToMouse()
     {
-        _currentPosition = _cam.WorldToScreenPoint(transform.position);
+        if (Time.timeScale > 0)
+        {
+            _currentPosition = _cam.WorldToScreenPoint(transform.position);
 
-        _mousePosition = Input.mousePosition;
-        _mousePosition.z = _mouseZ;
-        _mousePosition.x = _mousePosition.x - _currentPosition.x;
-        _mousePosition.y = _mousePosition.y - _currentPosition.y;
+            _mousePosition = Input.mousePosition;
+            _mousePosition.z = _mouseZ;
+            _mousePosition.x = _mousePosition.x - _currentPosition.x;
+            _mousePosition.y = _mousePosition.y - _currentPosition.y;
 
-        _turnAngle = Mathf.Atan2(_mousePosition.y, _mousePosition.x) * Mathf.Rad2Deg + 90;
-        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _turnAngle));
+            _turnAngle = Mathf.Atan2(_mousePosition.y, _mousePosition.x) * Mathf.Rad2Deg + 90;
+            transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _turnAngle));
+        }
     }
 
 }

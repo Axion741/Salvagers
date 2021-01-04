@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PowerSwitch : MonoBehaviour, IPointerClickHandler
 {
+    private ShipSceneUIController _shipSceneUIController;
     private Image _offLight;
     private Image _switch;
     private Sprite _onSwitch;
@@ -19,6 +20,11 @@ public class PowerSwitch : MonoBehaviour, IPointerClickHandler
         _offSwitch = Resources.LoadAll<Sprite>("Sprites/Minigames/Computer/ComputerComponents/Power/Switch_OFF")[0];
     }
 
+    private void Start()
+    {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
+    }
+
     public void SetPairedLight(Image offLight)
     {
         _offLight = offLight;
@@ -26,7 +32,7 @@ public class PowerSwitch : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (interactionDisabled) 
+        if (interactionDisabled || _shipSceneUIController.escapeMenuIsOpen) 
         {
             return;
         }

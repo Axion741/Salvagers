@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CoolingUnit : MonoBehaviour, IPointerClickHandler, IComputerComponent
 {
     private ComputerComponentMinigame _parent;
+    private ShipSceneUIController _shipSceneUIController;
     private List<Screw> _screws = new List<Screw>();
 
     private bool _interactionDisabled;
@@ -13,6 +14,7 @@ public class CoolingUnit : MonoBehaviour, IPointerClickHandler, IComputerCompone
     // Start is called before the first frame update
     void Start()
     {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _screws.AddRange(gameObject.GetComponentsInChildren<Screw>());
 
         if (_interactionDisabled)
@@ -24,7 +26,7 @@ public class CoolingUnit : MonoBehaviour, IPointerClickHandler, IComputerCompone
     // Update is called once per frame
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (AtLeastOneScrew() || _interactionDisabled)
+        if (AtLeastOneScrew() || _interactionDisabled || _shipSceneUIController.escapeMenuIsOpen)
         {
             return;
         }

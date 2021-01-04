@@ -11,6 +11,7 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
     private Text _downloadText;
 
     private Computer _parent;
+    private ShipSceneUIController _shipSceneUIController;
 
     private string _correctPassword = "PASSWORD";
     private bool _closing = false;
@@ -23,6 +24,7 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
 
     private void Start()
     {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _input = GameObject.Find("InputField").GetComponent<InputField>();
         _loginText = GameObject.Find("LoginResult").GetComponent<Text>();
         _downloadText = GameObject.Find("DownloadResult").GetComponent<Text>();
@@ -32,6 +34,18 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
 
     private void Update()
     {
+        if (_shipSceneUIController.escapeMenuIsOpen)
+        {
+            if (_input.IsActive() == true)
+                _input.DeactivateInputField();
+
+            return;
+        } 
+        else if (_input.IsActive() == false)
+        {
+            _input.ActivateInputField();
+        }
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
             ProcessInput();
