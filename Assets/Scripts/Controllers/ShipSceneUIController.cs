@@ -7,6 +7,7 @@ public class ShipSceneUIController : MonoBehaviour
 {
     private PlayerController _playerController;
     private SceneController _sceneController;
+    private AudioController _audioController;
 
     private bool _characterMenuIsOpen;
 
@@ -23,6 +24,7 @@ public class ShipSceneUIController : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
         _sceneController = FindObjectOfType<SceneController>();
+        _audioController = FindObjectOfType<AudioController>();
 
         characterNameText.text = _playerController.playerName;
         characterCreditText.text = _playerController.credits.ToString();
@@ -74,5 +76,6 @@ public class ShipSceneUIController : MonoBehaviour
     {
         Time.timeScale = 1;
         _sceneController.FadeToScene(1);
+        _audioController.FadeTitleMusic(2, 1);
     }
 }

@@ -56,6 +56,7 @@ public class MainMenuController : MonoBehaviour
     public void LoadShipScene()
     {
         _sceneController.FadeToScene(2);
+        _audioController.FadeTitleMusic(10, 0);
     }
 
     public void OpenOptions()
