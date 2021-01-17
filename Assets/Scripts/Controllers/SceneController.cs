@@ -7,6 +7,9 @@ public class SceneController : MonoBehaviour
 
     private int _sceneIndexToLoad;
 
+    public bool skipToMenuScene;
+    public bool skipToGameScene;
+
     void Awake()
     {
         _anim = gameObject.GetComponent<Animator>();
@@ -16,7 +19,13 @@ public class SceneController : MonoBehaviour
     {
         SetupSingleton();
 
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        if (skipToMenuScene)
+            SceneManager.LoadScene(1);
+
+        else if (skipToGameScene)
+            SceneManager.LoadScene(2);
+
+        else if (SceneManager.GetActiveScene().buildIndex == 0)
             Invoke("LoadMainMenu", 5);
     }
 
