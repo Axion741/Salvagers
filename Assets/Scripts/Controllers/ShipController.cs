@@ -8,7 +8,6 @@ public class ShipController : MonoBehaviour
     public GameObject environment;
 
     public string shipClass;
-    public bool power;
     public float integrity;
 
     // Start is called before the first frame update
@@ -17,14 +16,12 @@ public class ShipController : MonoBehaviour
         GetRooms();
 
         shipClass = "TestShip";
-        power = false;
         integrity = 100f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void GetRooms()

@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Room : MonoBehaviour
 {
     public List<Room> connectingRooms = new List<Room>();
+    public SpriteRenderer powerIndicatorSprite;
+    public Light2D powerIndicatorLight;
 
     private string roomDesignator;
-    private bool isPowered;
 
+    public bool hasShuttlePower;
+    public bool hasShipPower;
     public bool isAirlock;
     public bool isCorridor;
 
@@ -16,6 +20,8 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         roomDesignator = gameObject.name;
+        powerIndicatorLight.color = Color.red;
+        powerIndicatorSprite.color = Color.red;
     }
 
     // Start is called before the first frame update
@@ -23,7 +29,7 @@ public class Room : MonoBehaviour
     {
         if (testConnection)
         {
-            PowerUpRoom(100, 15, true);
+            PowerUpRoom("shuttle", 100, 20, true);
         }
     }
 
@@ -33,7 +39,7 @@ public class Room : MonoBehaviour
 
     }
 
-    public void PowerUpRoom(int successPercentage, int successDegredation = 0, bool perpetuate = false)
+    public void PowerUpRoom(string source, int successPercentage, int successDegredation = 0, bool perpetuate = false)
     {
         if (successPercentage > 100)
             successPercentage = 100;
@@ -46,19 +52,79 @@ public class Room : MonoBehaviour
         if (random > successPercentage)
             return;
 
-        isPowered = true;
+        if (source == "ship")
+        {
+            hasShipPower = true;
+            powerIndicatorLight.color = Color.green;
+            powerIndicatorSprite.color = Color.green;
+        }
 
-        Debug.Log($"{roomDesignator} Powered Up");
+        if (source == "shuttle" && !hasShipPower)
+        {
+            hasShuttlePower = true;
+            powerIndicatorLight.color = Color.blue;
+            powerIndicatorSprite.color = Color.blue;
+        }
+
+        Debug.Log($"{roomDesignator} Powered Up by {source}");
 
         if (perpetuate)
         {
             foreach (var room in connectingRooms)
             {
-                if (!room.isPowered)
+                if ((!room.hasShuttlePower && source == "shuttle") || (!room.hasShipPower && source == "ship"))
                 {
-                    room.PowerUpRoom(successPercentage - successDegredation, successDegredation, perpetuate);
+                    room.PowerUpRoom(source, successPercentage - successDegredation, successDegredation, perpetuate);
                 }
             }
         }
+    }
+
+    public void PowerDownRoom(string source, bool perpetuate = false)
+    {
+        if (source == "ship")
+        {
+            hasShipPower = false;
+
+            if (hasShuttlePower)
+            {
+                powerIndicatorLight.color = Color.blue;
+                powerIndicatorSprite.color = Color.blue;
+            }
+            else
+            {
+                powerIndicatorLight.color = Color.red;
+                powerIndicatorSprite.color = Color.red;
+            }
+        }
+
+        if (source == "shuttle")
+        {
+            hasShuttlePower = false;
+
+            if (!hasShipPower)
+            {
+                powerIndicatorLight.color = Color.red;
+                powerIndicatorSprite.color = Color.red;
+            }
+        }
+
+        Debug.Log($"{roomDesignator} Powered Down by {source}");
+
+        if (perpetuate)
+        {
+            foreach (var room in connectingRooms)
+            {
+                if ((room.hasShuttlePower && source == "shuttle") || (room.hasShipPower && source == "ship"))
+                {
+                    room.PowerDownRoom(source, perpetuate);
+                }
+            }
+        }
+    }
+
+    public bool HasAnyPower()
+    {
+        return hasShipPower || hasShuttlePower;
     }
 }
