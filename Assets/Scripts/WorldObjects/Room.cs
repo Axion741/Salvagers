@@ -7,6 +7,7 @@ public class Room : MonoBehaviour
     public List<Room> connectingRooms = new List<Room>();
     public SpriteRenderer powerIndicatorSprite;
     public Light2D powerIndicatorLight;
+    private List<RoomLight> _roomLights = new List<RoomLight>();
 
     private string roomDesignator;
 
@@ -22,6 +23,11 @@ public class Room : MonoBehaviour
         roomDesignator = gameObject.name;
         powerIndicatorLight.color = Color.red;
         powerIndicatorSprite.color = Color.red;
+
+        var roomLights = gameObject.transform.Find("RoomLights");
+
+        foreach (var child in roomLights.GetComponentsInChildren<RoomLight>())
+            _roomLights.Add(child);
     }
 
     // Start is called before the first frame update
@@ -65,6 +71,9 @@ public class Room : MonoBehaviour
             powerIndicatorLight.color = Color.blue;
             powerIndicatorSprite.color = Color.blue;
         }
+
+        foreach (var light in _roomLights)
+            light.TogglePower(true);
 
         Debug.Log($"{roomDesignator} Powered Up by {source}");
 
@@ -110,6 +119,9 @@ public class Room : MonoBehaviour
         }
 
         Debug.Log($"{roomDesignator} Powered Down by {source}");
+
+        foreach (var light in _roomLights)
+            light.TogglePower(false);
 
         if (perpetuate)
         {
