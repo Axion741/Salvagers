@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using SpriteGlow;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
 public class Room : MonoBehaviour
 {
     public List<Room> connectingRooms = new List<Room>();
-    public SpriteRenderer powerIndicatorSprite;
-    public Light2D powerIndicatorLight;
-    private List<RoomLight> _roomLights = new List<RoomLight>();
+    public SpriteGlowEffect[] powerLines;
+    private RoomLight[] _roomLights;
 
     private string roomDesignator;
 
@@ -21,13 +21,10 @@ public class Room : MonoBehaviour
     private void Awake()
     {
         roomDesignator = gameObject.name;
-        powerIndicatorLight.color = Color.red;
-        powerIndicatorSprite.color = Color.red;
+        powerLines = gameObject.transform.Find("PowerLines").GetComponentsInChildren<SpriteGlowEffect>();
+        SetPowerLineColor(Color.red);
 
-        var roomLights = gameObject.transform.Find("RoomLights");
-
-        foreach (var child in roomLights.GetComponentsInChildren<RoomLight>())
-            _roomLights.Add(child);
+        _roomLights = gameObject.transform.Find("RoomLights").GetComponentsInChildren<RoomLight>();
     }
 
     // Start is called before the first frame update
@@ -61,15 +58,13 @@ public class Room : MonoBehaviour
         if (source == "ship")
         {
             hasShipPower = true;
-            powerIndicatorLight.color = Color.green;
-            powerIndicatorSprite.color = Color.green;
+            SetPowerLineColor(Color.green);
         }
 
         if (source == "shuttle" && !hasShipPower)
         {
             hasShuttlePower = true;
-            powerIndicatorLight.color = Color.blue;
-            powerIndicatorSprite.color = Color.blue;
+            SetPowerLineColor(Color.blue);
         }
 
         foreach (var light in _roomLights)
@@ -97,14 +92,12 @@ public class Room : MonoBehaviour
 
             if (hasShuttlePower)
             {
-                powerIndicatorLight.color = Color.blue;
-                powerIndicatorSprite.color = Color.blue;
+                SetPowerLineColor(Color.blue);
             }
             else
             {
-                powerIndicatorLight.color = Color.red;
-                powerIndicatorSprite.color = Color.red;
-            }
+                SetPowerLineColor(Color.red)
+;            }
         }
 
         if (source == "shuttle")
@@ -113,8 +106,7 @@ public class Room : MonoBehaviour
 
             if (!hasShipPower)
             {
-                powerIndicatorLight.color = Color.red;
-                powerIndicatorSprite.color = Color.red;
+                SetPowerLineColor(Color.red);
             }
         }
 
@@ -138,5 +130,11 @@ public class Room : MonoBehaviour
     public bool HasAnyPower()
     {
         return hasShipPower || hasShuttlePower;
+    }
+
+    private void SetPowerLineColor(Color color)
+    {
+        foreach (var line in powerLines)
+            line.GlowColor = color;
     }
 }
