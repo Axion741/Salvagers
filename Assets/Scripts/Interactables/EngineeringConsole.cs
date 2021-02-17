@@ -7,8 +7,8 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
     private Room _parentRoom;
     private bool _shipPower;
     private string _interactionPrompt;
-    private string _shutdownString = "Shutdown Ship Reactor";
-    private string _startupString = "Startup Ship Reactor";
+    private string _shutdownString = "Shut Down Ship Reactor";
+    private string _startupString = "Start Up Ship Reactor";
 
     private void Awake()
     {
