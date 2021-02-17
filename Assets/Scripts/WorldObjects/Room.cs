@@ -112,8 +112,11 @@ public class Room : MonoBehaviour
 
         Debug.Log($"{roomDesignator} Powered Down by {source}");
 
-        foreach (var light in _roomLights)
-            light.TogglePower(false);
+        if (!hasShipPower && !hasShuttlePower)
+        {
+            foreach (var light in _roomLights)
+                light.TogglePower(false);
+        }
 
         if (perpetuate)
         {
