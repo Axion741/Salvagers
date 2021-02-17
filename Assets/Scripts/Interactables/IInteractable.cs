@@ -1,11 +1,11 @@
-﻿using System.Diagnostics;
-
-namespace Assets.Scripts
+﻿namespace Assets.Scripts
 {
     interface IInteractable
     {
         void UseObject();
 
         void HighlightObject(bool enabled);
+
+        string GetInteractionPrompt();
     }
 }

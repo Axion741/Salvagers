@@ -8,6 +8,8 @@ public class PowerConduit : MonoBehaviour, IInteractable
     private SpriteRenderer _spriteRenderer;
     private Light2D _light;
 
+    private string _interactionPrompt = "Repair Power Conduit";
+
     private void Awake()
     {
         _highlight = gameObject.transform.Find("InteractionHalo").GetComponent<SpriteRenderer>();
@@ -29,5 +31,10 @@ public class PowerConduit : MonoBehaviour, IInteractable
         gameObject.tag = "Environment";
 
         HighlightObject(false);
+    }
+
+    public string GetInteractionPrompt()
+    {
+        return _interactionPrompt;
     }
 }

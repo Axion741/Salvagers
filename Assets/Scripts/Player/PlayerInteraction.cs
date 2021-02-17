@@ -3,7 +3,14 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private ShipSceneUIController _shipSceneUIController;
+
     private IInteractable _currentTarget;
+
+    private void Start()
+    {
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
+    }
 
     private void Update()
     {
@@ -12,6 +19,8 @@ public class PlayerInteraction : MonoBehaviour
             if (_currentTarget != null)
             {
                 _currentTarget.UseObject();
+                //Set interaction prompt again incase the prompt changes after use
+                _shipSceneUIController.SetInteractionPrompt("E", _currentTarget.GetInteractionPrompt());
             }
             else
             {
@@ -27,6 +36,7 @@ public class PlayerInteraction : MonoBehaviour
             if (collision.TryGetComponent<IInteractable>(out _currentTarget))
             {
                 _currentTarget.HighlightObject(true);
+                _shipSceneUIController.SetInteractionPrompt("E", _currentTarget.GetInteractionPrompt());
             }
             else
             {
@@ -42,6 +52,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             _currentTarget.HighlightObject(false);
             _currentTarget = null;
+            _shipSceneUIController.ClearInteractionPrompt();
         }
     }
 }

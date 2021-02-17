@@ -6,6 +6,7 @@ public class DoorButton : MonoBehaviour, IInteractable
 {
     private IDoor _parent;
     private SpriteRenderer _highlight;
+    private string _interactionPrompt = "Press Door Button";
 
     private void Awake()
     {
@@ -22,4 +23,9 @@ public class DoorButton : MonoBehaviour, IInteractable
     {
         _parent.ToggleDoor();
     } 
+
+    public string GetInteractionPrompt()
+    {
+        return _interactionPrompt;
+    }
 }

@@ -12,6 +12,7 @@ public class Computer : MonoBehaviour, IInteractable
     private GameObject[] _appropriateMinigames;
     private GameObject _selectedMinigame;
     private bool _componentMinigameSelected;
+    private string _interactionPrompt;
     
     public System.Type targetComponentType;
 
@@ -30,10 +31,12 @@ public class Computer : MonoBehaviour, IInteractable
         {
             _powerLight.color = Color.red;
             _monitorLight.color = Color.red;
+            _interactionPrompt = "Extract Terminal Components";
         }
         else
         {
             _powerLight.color = Color.green;
+            _interactionPrompt = "Use Terminal";
         }
     }
 
@@ -73,5 +76,10 @@ public class Computer : MonoBehaviour, IInteractable
         {
             return;
         }
+    }
+
+    public string GetInteractionPrompt()
+    {
+        return _interactionPrompt;
     }
 }
