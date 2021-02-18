@@ -57,6 +57,7 @@ public class MainMenuController : MonoBehaviour
     {
         _sceneController.FadeToScene(2);
         _audioController.FadeTitleMusic(10, 0);
+        _audioController.FadeBackgroundMusic(10, "audio_mangler_science_fiction_ship_power_room_8_055");
     }
 
     public void OpenOptions()

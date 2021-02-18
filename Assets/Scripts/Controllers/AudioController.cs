@@ -5,9 +5,12 @@ public class AudioController : MonoBehaviour
 {
     private SaveController _saveController;
 
+    public AudioSource titleMusicSource;
     public AudioSource backgroundMusicSource;
 
+    private Coroutine _titleMusicCoroutine;
     private Coroutine _backgroundMusicCoroutine;
+
     public float musicVolume;
     public float sfxVolume;
 
@@ -21,8 +24,9 @@ public class AudioController : MonoBehaviour
         musicVolume = _saveController.saveModel.musicVolume;
         sfxVolume = _saveController.saveModel.sfxVolume;
 
-        backgroundMusicSource.volume = musicVolume;
-        backgroundMusicSource.Play();
+        titleMusicSource.volume = musicVolume;
+        titleMusicSource.time = 5;
+        titleMusicSource.Play();
     }
 
     void SetupSingleton()
@@ -40,7 +44,7 @@ public class AudioController : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         musicVolume = volume;
-        backgroundMusicSource.volume = volume;
+        titleMusicSource.volume = volume;
     }
 
     public void SetSfxVolume(float volume)
@@ -48,20 +52,29 @@ public class AudioController : MonoBehaviour
         sfxVolume = volume;
     }
 
-    public void FadeTitleMusic(float duration, float targetVolume)
+    public void FadeTitleMusic(float duration, float targetVolume = -1)
     {
-        if (_backgroundMusicCoroutine != null)
-            StopCoroutine(_backgroundMusicCoroutine);
+        if (_titleMusicCoroutine != null)
+            StopCoroutine(_titleMusicCoroutine);
 
-        _backgroundMusicCoroutine = StartCoroutine(FadeAudioSource(backgroundMusicSource, duration, targetVolume, true));
+        if (targetVolume == -1)
+            targetVolume = musicVolume;
+
+        _titleMusicCoroutine = StartCoroutine(FadeAudioSource(titleMusicSource, duration, targetVolume, true));
     }
 
-    public void FadeMusic(AudioSource audioSource, float duration, float targetVolume, bool stopAudioWhenVolumeZero)
+    public void FadeBackgroundMusic(float duration, string track = null, float targetVolume = -1)
     {
         if (_backgroundMusicCoroutine != null)
             StopCoroutine(_backgroundMusicCoroutine);
 
-        _backgroundMusicCoroutine = StartCoroutine(FadeAudioSource(audioSource, duration, targetVolume, stopAudioWhenVolumeZero));
+        if (targetVolume == -1)
+            targetVolume = musicVolume/4;
+
+        if (track != null)
+            backgroundMusicSource.clip = Resources.Load($"Audio/Music/{track}") as AudioClip;
+
+        _backgroundMusicCoroutine = StartCoroutine(FadeAudioSource(backgroundMusicSource, duration, targetVolume, true));
     }
 
     private IEnumerator FadeAudioSource(AudioSource audioSource, float duration, float targetVolume, bool stopAudioWhenVolumeZero)

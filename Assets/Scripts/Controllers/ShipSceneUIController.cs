@@ -78,7 +78,8 @@ public class ShipSceneUIController : MonoBehaviour
     {
         Time.timeScale = 1;
         _sceneController.FadeToScene(1);
-        _audioController.FadeTitleMusic(2, 1);
+        _audioController.FadeTitleMusic(2);
+        _audioController.FadeBackgroundMusic(2, null, 0);
     }
 
     public void SetInteractionPrompt(string key, string prompt)
