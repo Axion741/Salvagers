@@ -51,7 +51,3 @@ crashlytics-build.properties
 ERP/
 .erp
 Assets/ERP.meta
-
-#VSCode Integration
-VSCode/
-Assets/VSCode.meta
