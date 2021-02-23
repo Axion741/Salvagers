@@ -20,6 +20,7 @@ public class ShipSceneUIController : MonoBehaviour
     public Text characterCreditText;
     public Text characterExperienceText;
     public TextMeshProUGUI interactionPrompt;
+    public GameObject interactionPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -90,5 +91,10 @@ public class ShipSceneUIController : MonoBehaviour
     public void ClearInteractionPrompt()
     {
         interactionPrompt.text = "";
+    }
+
+    public void ToggleInteractionPanelVisibility(bool toggle)
+    {
+        interactionPanel.SetActive(toggle);
     }
 }

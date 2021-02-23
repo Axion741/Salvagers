@@ -4,6 +4,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class PowerConduit : MonoBehaviour, IInteractable
 {
+    private PlayerInteraction _playerInteraction;
     private SpriteRenderer _highlight;
     private SpriteRenderer _spriteRenderer;
     private Light2D _light;
@@ -12,6 +13,7 @@ public class PowerConduit : MonoBehaviour, IInteractable
 
     private void Awake()
     {
+        _playerInteraction = FindObjectOfType<PlayerInteraction>();
         _highlight = gameObject.transform.Find("InteractionHalo").GetComponent<SpriteRenderer>();
 
         _spriteRenderer = gameObject.transform.Find("Image").GetComponent<SpriteRenderer>();
@@ -31,6 +33,7 @@ public class PowerConduit : MonoBehaviour, IInteractable
         gameObject.tag = "Environment";
 
         HighlightObject(false);
+        _playerInteraction.ClearCurrentTargetAndInteraction();
     }
 
     public string GetInteractionPrompt()

@@ -19,6 +19,7 @@ public class PlayerInteraction : MonoBehaviour
             if (_currentTarget != null)
             {
                 _currentTarget.UseObject();
+
                 //Set interaction prompt again incase the prompt changes after use
                 _shipSceneUIController.SetInteractionPrompt("E", _currentTarget.GetInteractionPrompt());
             }
@@ -54,5 +55,11 @@ public class PlayerInteraction : MonoBehaviour
             _currentTarget = null;
             _shipSceneUIController.ClearInteractionPrompt();
         }
+    }
+
+    public void ClearCurrentTargetAndInteraction()
+    {
+        _currentTarget = null;
+        _shipSceneUIController.ClearInteractionPrompt();
     }
 }

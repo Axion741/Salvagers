@@ -5,6 +5,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class Computer : MonoBehaviour, IInteractable
 {
+    private PlayerInteraction _playerInteraction;
+    private ShipSceneUIController _shipSceneUIController;
     private SpriteRenderer _highlight;
     private SpriteRenderer _sprite;
     private Light2D _monitorLight;
@@ -18,6 +20,8 @@ public class Computer : MonoBehaviour, IInteractable
 
     private void Awake()
     {
+        _playerInteraction = FindObjectOfType<PlayerInteraction>();
+        _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
         _highlight = gameObject.transform.Find("InteractionHalo").GetComponent<SpriteRenderer>();
         _monitorLight = gameObject.transform.Find("MonitorLight").GetComponent<Light2D>();
         _powerLight = gameObject.transform.Find("PowerLight").GetComponent<Light2D>();
@@ -47,6 +51,7 @@ public class Computer : MonoBehaviour, IInteractable
 
     public void UseObject()
     {
+        _shipSceneUIController.ToggleInteractionPanelVisibility(false);
         var minigame = Instantiate(_selectedMinigame);
         var minigameScript = minigame.GetComponent<IMinigame>();
         minigameScript.SetParent(this);
@@ -54,7 +59,9 @@ public class Computer : MonoBehaviour, IInteractable
 
     public void MinigameResult(bool result)
     {
-        if(result == true)
+        _shipSceneUIController.ToggleInteractionPanelVisibility(true);
+
+        if (result == true)
         {
             _sprite.sprite = Resources.Load("Sprites/Interactables/ComputerOff", typeof(Sprite)) as Sprite;
             _monitorLight.enabled = false;
@@ -71,6 +78,7 @@ public class Computer : MonoBehaviour, IInteractable
             gameObject.tag = "Environment";
 
             HighlightObject(false);
+            _playerInteraction.ClearCurrentTargetAndInteraction();
         }
         else
         {
