@@ -62,9 +62,10 @@ public class RoomLight : MonoBehaviour
         }
     }
 
-    public void TogglePower(bool power)
+    public void TogglePower(bool power, float intensity = 1)
     {
         _powered = power;
+        lightSource.intensity = intensity;
 
         if (_destroyed)
             return;

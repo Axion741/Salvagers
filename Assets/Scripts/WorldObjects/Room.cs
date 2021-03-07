@@ -10,7 +10,7 @@ public class Room : MonoBehaviour
     public SpriteGlowEffect[] powerLines;
     private RoomLight[] _roomLights;
     private List<InteractionSpot> _interactionSpots;
-    private IInteractable _powerConduit;
+    private PowerConduit _powerConduit;
 
     private string roomDesignator;
 
@@ -62,19 +62,10 @@ public class Room : MonoBehaviour
             return;
 
         if (source == "ship")
-        {
-            hasShipPower = true;
-            SetPowerLineColor(Color.green);
-        }
+            PowerUpFromShip();
 
-        if (source == "shuttle" && !hasShipPower)
-        {
-            hasShuttlePower = true;
-            SetPowerLineColor(Color.blue);
-        }
-
-        foreach (var light in _roomLights)
-            light.TogglePower(true);
+        if (source == "shuttle")
+            PowerUpFromShuttle();
 
         Debug.Log($"{roomDesignator} Powered Up by {source}");
 
@@ -151,7 +142,7 @@ public class Room : MonoBehaviour
     {
         var conduitSpot = _interactionSpots[Random.Range(0, _interactionSpots.Count)];
 
-        conduitSpot.SpawnInteractable(true);
+        _powerConduit = conduitSpot.SpawnConduit();
         _interactionSpots.Remove(conduitSpot);
 
         if (_interactionSpots.Count > 0)
@@ -159,6 +150,50 @@ public class Room : MonoBehaviour
             foreach (var interactionSpot in _interactionSpots)
             {
                 interactionSpot.SpawnInteractable();
+            }
+        }
+    }
+
+    private bool ConduitIsFixedOrAbsent()
+    {
+        return _powerConduit == null || _powerConduit.isFixed;
+    }
+
+    private void PowerUpFromShip()
+    {
+        hasShipPower = true;
+
+        if (ConduitIsFixedOrAbsent())
+        {
+            SetPowerLineColor(Color.green);
+            foreach (var light in _roomLights)
+                light.TogglePower(true);
+        }
+        else
+        {
+            SetPowerLineColor(Color.yellow);
+            foreach (var light in _roomLights)
+                light.TogglePower(true, 0.5f);
+        }
+    }
+
+    private void PowerUpFromShuttle()
+    {
+        hasShuttlePower = true;
+
+        if (!hasShipPower)
+        {
+            if (ConduitIsFixedOrAbsent())
+            {
+                SetPowerLineColor(Color.cyan);
+                foreach (var light in _roomLights)
+                    light.TogglePower(true, 0.75f);
+            }
+            else
+            {
+                SetPowerLineColor(Color.blue);
+                foreach (var light in _roomLights)
+                    light.TogglePower(true, 0.25f);
             }
         }
     }

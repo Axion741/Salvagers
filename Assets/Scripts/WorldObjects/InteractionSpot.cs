@@ -14,20 +14,20 @@ public class InteractionSpot : MonoBehaviour
         _interactablePrefabs.Remove(_conduitPrefab);
     }
 
-    public void SpawnInteractable(bool isConduit = false)
+    public PowerConduit SpawnConduit()
     {
-        GameObject selectedInteractable;
+        var newConduit = Instantiate(_conduitPrefab, transform.position, transform.rotation);
 
-        if (isConduit)
-        {
-            selectedInteractable = _conduitPrefab;
-        }
-        else
-        {
-            var i = Random.Range(0, _interactablePrefabs.Count);
-            selectedInteractable = _interactablePrefabs[i];
-        }
+        Destroy(gameObject);
 
+        return newConduit.GetComponent<PowerConduit>();
+    }
+
+    public void SpawnInteractable()
+    {
+        var i = Random.Range(0, _interactablePrefabs.Count);
+        var selectedInteractable = _interactablePrefabs[i];
+        
         Instantiate(selectedInteractable, transform.position, transform.rotation);
 
         Destroy(gameObject);

@@ -2533,7 +2533,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194798
+      value: -359228
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -2618,7 +2618,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194806
+      value: -359236
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -2713,7 +2713,7 @@ PrefabInstance:
     - target: {fileID: 2727580179753704225, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194828
+      value: -359258
       objectReference: {fileID: 0}
     - target: {fileID: 5159887902370908657, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
@@ -2790,6 +2790,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomLight
       objectReference: {fileID: 0}
+    - target: {fileID: 3915825068239484722, guid: 464dfb071af93da40877b7fd9887a1d6,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7128755396979589642, guid: 464dfb071af93da40877b7fd9887a1d6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2863,7 +2868,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194850
+      value: -359280
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3103,7 +3108,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194874
+      value: -359310
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3188,7 +3193,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194882
+      value: -359318
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3358,7 +3363,7 @@ PrefabInstance:
     - target: {fileID: 2727580179753704225, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194920
+      value: -359356
       objectReference: {fileID: 0}
     - target: {fileID: 5159887902370908657, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
@@ -3593,7 +3598,7 @@ PrefabInstance:
     - target: {fileID: 2727580179753704225, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194962
+      value: -359398
       objectReference: {fileID: 0}
     - target: {fileID: 5159887902370908657, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
@@ -3668,7 +3673,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194974
+      value: -359410
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3753,7 +3758,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194982
+      value: -359418
       objectReference: {fileID: 0}
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3848,7 +3853,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -194990
+      value: -359426
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3943,7 +3948,7 @@ PrefabInstance:
     - target: {fileID: 2727580179753704225, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}
       propertyPath: m_InstanceId
-      value: -195012
+      value: -359448
       objectReference: {fileID: 0}
     - target: {fileID: 5159887902370908657, guid: b0c39317d60182b41ba738302fa75ec5,
         type: 3}

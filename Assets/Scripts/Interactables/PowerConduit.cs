@@ -11,6 +11,8 @@ public class PowerConduit : MonoBehaviour, IInteractable
 
     private string _interactionPrompt = "Repair Power Conduit";
 
+    public bool isFixed;
+
     private void Awake()
     {
         _playerInteraction = FindObjectOfType<PlayerInteraction>();
@@ -30,6 +32,7 @@ public class PowerConduit : MonoBehaviour, IInteractable
     {
         _spriteRenderer.sprite = Resources.Load("Sprites/Interactables/ConduitOn", typeof(Sprite)) as Sprite;
         _light.color = Color.green;
+        isFixed = true;
         gameObject.tag = "Environment";
 
         HighlightObject(false);
