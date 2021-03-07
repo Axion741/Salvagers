@@ -9,6 +9,7 @@ public class ShipController : MonoBehaviour
 
     public string shipClass;
     public float integrity;
+    public bool shipPower;
 
     // Start is called before the first frame update
     void Start()

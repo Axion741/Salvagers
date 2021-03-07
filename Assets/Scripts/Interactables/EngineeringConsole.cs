@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class EngineeringConsole : MonoBehaviour, IInteractable
 {
+    private ShipController _shipController;
     private SpriteRenderer _highlight;
     private Room _parentRoom;
-    private bool _shipPower;
     private string _interactionPrompt;
     private string _shutdownString = "Shut Down Ship Reactor";
     private string _startupString = "Start Up Ship Reactor";
@@ -14,13 +14,13 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
     {
         _highlight = gameObject.transform.Find("InteractionHalo").GetComponent<SpriteRenderer>();
         _parentRoom = gameObject.GetComponentInParent<Room>();
-        _shipPower = _parentRoom.hasShipPower;
+        _shipController = FindObjectOfType<ShipController>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (_shipPower)
+        if (_shipController.shipPower)
         {
             _interactionPrompt = _shutdownString;        
         }
@@ -37,18 +37,18 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
 
     public void UseObject()
     {
-        if (_shipPower)
+        if (_shipController.shipPower)
         {
-            _parentRoom.PowerDownRoom("ship", true);
+            _parentRoom.PowerDownRoom("ship");
             _interactionPrompt = _startupString;
         }
         else
         {
-            _parentRoom.PowerUpRoom("ship", 100, 0, true);
+            _parentRoom.PowerUpRoom("ship");
             _interactionPrompt = _shutdownString;
         }
 
-        _shipPower = _parentRoom.hasShipPower;
+        _shipController.shipPower = !_shipController.shipPower;
     }
 
     public string GetInteractionPrompt()

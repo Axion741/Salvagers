@@ -6,23 +6,27 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public List<Room> connectingRooms = new List<Room>();
-    public SpriteGlowEffect[] powerLines;
+    private ShipController _shipController;
     private RoomLight[] _roomLights;
     private List<InteractionSpot> _interactionSpots;
     private PowerConduit _powerConduit;
+    private bool _conduitFlag;
 
     private string roomDesignator;
 
+    public List<Room> connectingRooms = new List<Room>();
+    public SpriteGlowEffect[] powerLines;
+
     public bool hasShuttlePower;
-    public bool hasShipPower;
     public bool isAirlock;
     public bool isCorridor;
+    public string roomSpecialty;
 
     public bool testConnection;
 
     private void Awake()
     {
+        _shipController = FindObjectOfType<ShipController>();
         roomDesignator = gameObject.name;
         powerLines = gameObject.transform.Find("PowerLines").GetComponentsInChildren<SpriteGlowEffect>();
         SetPowerLineColor(Color.red);
@@ -38,29 +42,32 @@ public class Room : MonoBehaviour
     {
         if (testConnection)
         {
-            PowerUpRoom("shuttle", 100, 20, true);
+            PowerUpRoom("shuttle");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_conduitFlag && HasAnyPower())
+        {
+            if (_shipController.shipPower)
+                PowerUpRoom("ship");
+            else
+                PowerUpRoom("shuttle");
 
+            _conduitFlag = false;
+        }
+
+        if (_shipController.shipPower)
+            PowerUpRoom("ship");
+
+        else if (!_shipController.shipPower)
+            PowerDownRoom("ship");
     }
 
-    public void PowerUpRoom(string source, int successPercentage, int successDegredation = 0, bool perpetuate = false)
+    public void PowerUpRoom(string source)
     {
-        if (successPercentage > 100)
-            successPercentage = 100;
-
-        if (successPercentage == 0)
-            return;
-
-        var random = Random.Range(0, 101);
-
-        if (random > successPercentage)
-            return;
-
         if (source == "ship")
             PowerUpFromShip();
 
@@ -68,20 +75,9 @@ public class Room : MonoBehaviour
             PowerUpFromShuttle();
 
         Debug.Log($"{roomDesignator} Powered Up by {source}");
-
-        if (perpetuate)
-        {
-            foreach (var room in connectingRooms)
-            {
-                if ((!room.hasShuttlePower && source == "shuttle") || (!room.hasShipPower && source == "ship"))
-                {
-                    room.PowerUpRoom(source, successPercentage - successDegredation, successDegredation, perpetuate);
-                }
-            }
-        }
     }
 
-    public void PowerDownRoom(string source, bool perpetuate = false)
+    public void PowerDownRoom(string source)
     {
         if (source == "ship")
         {
@@ -94,22 +90,11 @@ public class Room : MonoBehaviour
         }
 
         Debug.Log($"{roomDesignator} Powered Down by {source}");
-
-        if (perpetuate)
-        {
-            foreach (var room in connectingRooms)
-            {
-                if ((room.hasShuttlePower && source == "shuttle") || (room.hasShipPower && source == "ship"))
-                {
-                    room.PowerDownRoom(source, perpetuate);
-                }
-            }
-        }
     }
 
     public bool HasAnyPower()
     {
-        return hasShipPower || hasShuttlePower;
+        return _shipController.shipPower || hasShuttlePower;
     }
 
     private void SetPowerLineColor(Color color)
@@ -123,6 +108,7 @@ public class Room : MonoBehaviour
         var conduitSpot = _interactionSpots[Random.Range(0, _interactionSpots.Count)];
 
         _powerConduit = conduitSpot.SpawnConduit();
+        _powerConduit.SetParentRoom(this);
         _interactionSpots.Remove(conduitSpot);
 
         if (_interactionSpots.Count > 0)
@@ -141,8 +127,6 @@ public class Room : MonoBehaviour
 
     private void PowerUpFromShip()
     {
-        hasShipPower = true;
-
         if (ConduitIsFixedOrAbsent())
         {
             SetPowerLineColor(Color.green);
@@ -161,7 +145,7 @@ public class Room : MonoBehaviour
     {
         hasShuttlePower = true;
 
-        if (!hasShipPower)
+        if (!_shipController.shipPower)
         {
             if (ConduitIsFixedOrAbsent())
             {
@@ -180,8 +164,6 @@ public class Room : MonoBehaviour
 
     private void PowerDownFromShip()
     {
-        hasShipPower = false;
-
         if (hasShuttlePower && ConduitIsFixedOrAbsent())
         {
             SetPowerLineColor(Color.cyan);
@@ -206,11 +188,16 @@ public class Room : MonoBehaviour
     {
         hasShuttlePower = false;
 
-        if (!hasShipPower)
+        if (!_shipController.shipPower)
         {
             SetPowerLineColor(Color.red);
             foreach (var light in _roomLights)
                 light.TogglePower(false);
         }
+    }
+
+    public void SetConduitFlag()
+    {
+        _conduitFlag = true;
     }
 }

@@ -8,6 +8,7 @@ public class PowerConduit : MonoBehaviour, IInteractable
     private SpriteRenderer _highlight;
     private SpriteRenderer _spriteRenderer;
     private Light2D _light;
+    private Room _parentRoom;
 
     private string _interactionPrompt = "Repair Power Conduit";
 
@@ -33,6 +34,7 @@ public class PowerConduit : MonoBehaviour, IInteractable
         _spriteRenderer.sprite = Resources.Load("Sprites/Interactables/ConduitOn", typeof(Sprite)) as Sprite;
         _light.color = Color.green;
         isFixed = true;
+        _parentRoom.SetConduitFlag();
         gameObject.tag = "Environment";
 
         HighlightObject(false);
@@ -42,5 +44,10 @@ public class PowerConduit : MonoBehaviour, IInteractable
     public string GetInteractionPrompt()
     {
         return _interactionPrompt;
+    }
+
+    public void SetParentRoom(Room parent)
+    {
+        _parentRoom = parent;
     }
 }
