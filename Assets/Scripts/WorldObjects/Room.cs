@@ -11,6 +11,7 @@ public class Room : MonoBehaviour
     private List<InteractionSpot> _interactionSpots;
     private PowerConduit _powerConduit;
     private bool _conduitFlag;
+    private bool _localPower;
 
     private string roomDesignator;
 
@@ -59,10 +60,10 @@ public class Room : MonoBehaviour
             _conduitFlag = false;
         }
 
-        if (_shipController.shipPower)
+        if (_shipController.shipPower && !_localPower)
             PowerUpRoom("ship");
 
-        else if (!_shipController.shipPower)
+        else if (!_shipController.shipPower && _localPower)
             PowerDownRoom("ship");
     }
 
@@ -73,6 +74,8 @@ public class Room : MonoBehaviour
 
         if (source == "shuttle")
             PowerUpFromShuttle();
+
+        _localPower = true;
 
         Debug.Log($"{roomDesignator} Powered Up by {source}");
     }
@@ -88,6 +91,8 @@ public class Room : MonoBehaviour
         {
             PowerDownFromShuttle();
         }
+
+        _localPower = false;
 
         Debug.Log($"{roomDesignator} Powered Down by {source}");
     }

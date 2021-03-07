@@ -20,7 +20,9 @@ public class PlayerInteraction : MonoBehaviour
             {
                 _currentTarget.UseObject();
 
+                //Second null check incase target cleared by use action
                 //Set interaction prompt again incase the prompt changes after use
+                if (_currentTarget != null)
                 _shipSceneUIController.SetInteractionPrompt("E", _currentTarget.GetInteractionPrompt());
             }
             else
