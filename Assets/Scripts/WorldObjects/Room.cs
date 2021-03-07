@@ -1,13 +1,16 @@
-﻿using SpriteGlow;
+﻿using Assets.Scripts;
+using SpriteGlow;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
 
 public class Room : MonoBehaviour
 {
     public List<Room> connectingRooms = new List<Room>();
     public SpriteGlowEffect[] powerLines;
     private RoomLight[] _roomLights;
+    private List<InteractionSpot> _interactionSpots;
+    private IInteractable _powerConduit;
 
     private string roomDesignator;
 
@@ -25,6 +28,9 @@ public class Room : MonoBehaviour
         SetPowerLineColor(Color.red);
 
         _roomLights = gameObject.transform.Find("RoomLights").GetComponentsInChildren<RoomLight>();
+        _interactionSpots = gameObject.transform.GetComponentsInChildren<InteractionSpot>().ToList();
+        if (_interactionSpots.Count > 0)
+            PopulateInteractables();
     }
 
     // Start is called before the first frame update
@@ -139,5 +145,21 @@ public class Room : MonoBehaviour
     {
         foreach (var line in powerLines)
             line.GlowColor = color;
+    }
+
+    private void PopulateInteractables()
+    {
+        var conduitSpot = _interactionSpots[Random.Range(0, _interactionSpots.Count)];
+
+        conduitSpot.SpawnInteractable(true);
+        _interactionSpots.Remove(conduitSpot);
+
+        if (_interactionSpots.Count > 0)
+        {
+            foreach (var interactionSpot in _interactionSpots)
+            {
+                interactionSpot.SpawnInteractable();
+            }
+        }
     }
 }
