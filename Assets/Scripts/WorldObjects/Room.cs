@@ -85,35 +85,15 @@ public class Room : MonoBehaviour
     {
         if (source == "ship")
         {
-            hasShipPower = false;
-
-            if (hasShuttlePower)
-            {
-                SetPowerLineColor(Color.blue);
-            }
-            else
-            {
-                SetPowerLineColor(Color.red)
-;            }
+            PowerDownFromShip();
         }
 
         if (source == "shuttle")
         {
-            hasShuttlePower = false;
-
-            if (!hasShipPower)
-            {
-                SetPowerLineColor(Color.red);
-            }
+            PowerDownFromShuttle();
         }
 
         Debug.Log($"{roomDesignator} Powered Down by {source}");
-
-        if (!hasShipPower && !hasShuttlePower)
-        {
-            foreach (var light in _roomLights)
-                light.TogglePower(false);
-        }
 
         if (perpetuate)
         {
@@ -195,6 +175,42 @@ public class Room : MonoBehaviour
                 foreach (var light in _roomLights)
                     light.TogglePower(true, 0.25f);
             }
+        }
+    }
+
+    private void PowerDownFromShip()
+    {
+        hasShipPower = false;
+
+        if (hasShuttlePower && ConduitIsFixedOrAbsent())
+        {
+            SetPowerLineColor(Color.cyan);
+            foreach (var light in _roomLights)
+                light.TogglePower(true, 0.75f);
+        }
+        else if (hasShuttlePower)
+        {
+            SetPowerLineColor(Color.blue);
+            foreach (var light in _roomLights)
+                light.TogglePower(true, 0.25f);
+        }
+        else
+        {
+            SetPowerLineColor(Color.red);
+            foreach (var light in _roomLights)
+                light.TogglePower(false);
+        }
+    }
+
+    private void PowerDownFromShuttle()
+    {
+        hasShuttlePower = false;
+
+        if (!hasShipPower)
+        {
+            SetPowerLineColor(Color.red);
+            foreach (var light in _roomLights)
+                light.TogglePower(false);
         }
     }
 }
