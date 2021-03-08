@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -23,13 +24,15 @@ public class InteractionSpot : MonoBehaviour
         return newConduit.GetComponent<PowerConduit>();
     }
 
-    public void SpawnInteractable()
+    public IInteractable SpawnInteractable()
     {
         var i = Random.Range(0, _interactablePrefabs.Count);
         var selectedInteractable = _interactablePrefabs[i];
         
-        Instantiate(selectedInteractable, transform.position, transform.rotation);
+        var newInteractable = Instantiate(selectedInteractable, transform.position, transform.rotation);
 
         Destroy(gameObject);
+
+        return newInteractable.GetComponent<IInteractable>();
     }
 }

@@ -15,6 +15,7 @@ public class Computer : MonoBehaviour, IInteractable
     private GameObject _selectedMinigame;
     private bool _componentMinigameSelected;
     private string _interactionPrompt;
+    private bool _completed;
     
     public System.Type targetComponentType;
 
@@ -65,17 +66,10 @@ public class Computer : MonoBehaviour, IInteractable
         {
             _sprite.sprite = Resources.Load("Sprites/Interactables/ComputerOff", typeof(Sprite)) as Sprite;
             _monitorLight.enabled = false;
-
-            if (_componentMinigameSelected)
-            {
-                _powerLight.enabled = false;
-            }
-            else
-            {
-                _powerLight.color = Color.red;
-            }
+            _powerLight.enabled = false;
 
             gameObject.tag = "Environment";
+            _completed = true;
 
             HighlightObject(false);
             _playerInteraction.ClearCurrentTargetAndInteraction();
@@ -89,5 +83,24 @@ public class Computer : MonoBehaviour, IInteractable
     public string GetInteractionPrompt()
     {
         return _interactionPrompt;
+    }
+
+    public void TogglePowered(bool toggle)
+    {
+        if (_completed)
+            return;
+
+        if (toggle)
+        {
+            _powerLight.enabled = true;
+            _monitorLight.enabled = true;
+            gameObject.tag = "Interactable";               
+        }
+        else 
+        {
+            _powerLight.enabled = false;
+            _monitorLight.enabled = false;
+            gameObject.tag = "Environment";
+        }
     }
 }

@@ -28,4 +28,18 @@ public class DoorButton : MonoBehaviour, IInteractable
     {
         return _interactionPrompt;
     }
+
+    public void TogglePowered(bool toggle)
+    {
+        if (toggle)
+        {
+            gameObject.tag = "Interactable";
+            _parent.ToggleDoorLights(toggle);
+        }
+        else
+        {
+            gameObject.tag = "Environment";
+            _parent.ToggleDoorLights(toggle);
+        }
+    }
 }

@@ -50,4 +50,9 @@ public class PowerConduit : MonoBehaviour, IInteractable
     {
         _parentRoom = parent;
     }
+
+    public void TogglePowered(bool toggle)
+    {
+        return;
+    }
 }

@@ -84,4 +84,9 @@ public class Door : MonoBehaviour, IDoor
         }
     }
 
+    public void ToggleDoorLights(bool toggle)
+    {
+        _wDoorLight.enabled = toggle;
+        _eDoorLight.enabled = toggle;
+    }
 }

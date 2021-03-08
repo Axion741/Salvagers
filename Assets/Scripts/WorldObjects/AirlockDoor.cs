@@ -103,4 +103,9 @@ public class AirlockDoor : MonoBehaviour, IDoor
             _panelLight.color = Color.red;
         }
     }
+
+    public void ToggleDoorLights(bool toggle)
+    {
+        return;
+    }
 }

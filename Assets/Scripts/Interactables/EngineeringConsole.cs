@@ -39,20 +39,25 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
     {
         if (_shipController.shipPower)
         {
+            _shipController.shipPower = !_shipController.shipPower;
             _parentRoom.PowerDownRoom("ship");
             _interactionPrompt = _startupString;
         }
         else
         {
+            _shipController.shipPower = !_shipController.shipPower;
             _parentRoom.PowerUpRoom("ship");
             _interactionPrompt = _shutdownString;
         }
-
-        _shipController.shipPower = !_shipController.shipPower;
     }
 
     public string GetInteractionPrompt()
     {
         return _interactionPrompt;
+    }
+
+    public void TogglePowered(bool toggle)
+    {
+        return;
     }
 }

@@ -8,7 +8,8 @@ public class Room : MonoBehaviour
 {
     private ShipController _shipController;
     private RoomLight[] _roomLights;
-    private List<InteractionSpot> _interactionSpots;
+    private List<InteractionSpot> _interactionSpots = new List<InteractionSpot>();
+    private List<IInteractable> _interactables = new List<IInteractable>();
     private PowerConduit _powerConduit;
     private bool _conduitFlag;
     private bool _localPower;
@@ -45,6 +46,16 @@ public class Room : MonoBehaviour
         {
             PowerUpRoom("shuttle");
         }
+
+        if (HasAnyPower() && ConduitIsFixedOrAbsent())
+        {
+            ToggleInteractables(true);
+        }
+        else
+        {
+            ToggleInteractables(false);
+        }
+            
     }
 
     // Update is called once per frame
@@ -77,6 +88,9 @@ public class Room : MonoBehaviour
 
         _localPower = true;
 
+        if (ConduitIsFixedOrAbsent())
+            ToggleInteractables(true);
+
         Debug.Log($"{roomDesignator} Powered Up by {source}");
     }
 
@@ -93,6 +107,9 @@ public class Room : MonoBehaviour
         }
 
         _localPower = false;
+
+        if (!HasAnyPower())
+            ToggleInteractables(false);
 
         Debug.Log($"{roomDesignator} Powered Down by {source}");
     }
@@ -120,7 +137,8 @@ public class Room : MonoBehaviour
         {
             foreach (var interactionSpot in _interactionSpots)
             {
-                interactionSpot.SpawnInteractable();
+                var interactable = interactionSpot.SpawnInteractable();
+                _interactables.Add(interactable);
             }
         }
     }
@@ -204,5 +222,13 @@ public class Room : MonoBehaviour
     public void SetConduitFlag()
     {
         _conduitFlag = true;
+    }
+
+    private void ToggleInteractables(bool toggle)
+    {
+        foreach (var interactable in _interactables)
+        {
+            interactable.TogglePowered(toggle);
+        }
     }
 }
