@@ -34,4 +34,13 @@ public class ShipController : MonoBehaviour
                 _rooms.Add(childRoom);
         }
     }
+
+    public void TurnOffShuttlePowerToAllRooms()
+    {
+        foreach (var room in _rooms)
+        {
+            room.PowerDownRoom("shuttle");
+            room.shuttlePowerIndex = null;
+        }
+    }
 }

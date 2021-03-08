@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.WorldObjects;
-using System;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
 public class AirlockDoor : MonoBehaviour, IDoor
 {
+    private ShipController _shipController;
     private AirlockDoor _dockedDoor;
+    private Room _parentRoom;
 
     private Animator _anim;
     private SpriteRenderer _doorPanel;
@@ -14,16 +15,19 @@ public class AirlockDoor : MonoBehaviour, IDoor
     private Light2D _panelLight;
 
     public bool doorSeal;
+    public bool isShuttleDoor;
     private bool _doorState;
 
     private void Awake()
     {
         _anim = GetComponent<Animator>();
         _doorState = _anim.GetBool("Open");
+        _parentRoom = gameObject.GetComponentInParent<Room>();
     }
 
     private void Start()
     {
+        _shipController = FindObjectOfType<ShipController>();
         var doorPanelObject = gameObject.transform.Find("DoorPanel");
         _doorPanel = doorPanelObject.GetComponent<SpriteRenderer>();
         _panelLight = doorPanelObject.transform.Find("PanelLight").GetComponent<Light2D>();
@@ -43,6 +47,7 @@ public class AirlockDoor : MonoBehaviour, IDoor
                 doorSeal = false;
                 CloseDoor();
                 _dockedDoor = null;
+                _shipController.TurnOffShuttlePowerToAllRooms();
             }
         }
     }
@@ -53,6 +58,11 @@ public class AirlockDoor : MonoBehaviour, IDoor
         {
             doorSeal = true;
             _dockedDoor = collision.gameObject.GetComponent<AirlockDoor>();
+            if (!isShuttleDoor)
+            {
+                _parentRoom.PowerUpRoom("shuttle");
+                _parentRoom.shuttlePowerIndex = 0;
+            }
         }
     }
 

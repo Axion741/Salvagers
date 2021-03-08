@@ -12,7 +12,8 @@ public class Room : MonoBehaviour
     private List<IInteractable> _interactables = new List<IInteractable>();
     private PowerConduit _powerConduit;
     private bool _conduitFlag;
-    private bool _localPower;
+    private bool _localShipPower;
+    private int _shuttlePowerDepth;
 
     private string roomDesignator;
 
@@ -24,11 +25,10 @@ public class Room : MonoBehaviour
     public bool isCorridor;
     public string roomSpecialty;
 
-    public bool testConnection;
+    public int? shuttlePowerIndex;
 
     private void Awake()
     {
-        _shipController = FindObjectOfType<ShipController>();
         roomDesignator = gameObject.name;
         powerLines = gameObject.transform.Find("PowerLines").GetComponentsInChildren<SpriteGlowEffect>();
         SetPowerLineColor(Color.red);
@@ -42,10 +42,8 @@ public class Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (testConnection)
-        {
-            PowerUpRoom("shuttle");
-        }
+        _shipController = FindObjectOfType<ShipController>();
+        _shuttlePowerDepth = FindObjectOfType<Shuttle>().shuttlePowerDepth;
 
         if (HasAnyPower() && ConduitIsFixedOrAbsent())
         {
@@ -71,11 +69,14 @@ public class Room : MonoBehaviour
             _conduitFlag = false;
         }
 
-        if (_shipController.shipPower && !_localPower)
+        if (_shipController.shipPower && !_localShipPower)
             PowerUpRoom("ship");
 
-        else if (!_shipController.shipPower && _localPower)
+        else if (!_shipController.shipPower && _localShipPower)
             PowerDownRoom("ship");
+
+        if (!hasShuttlePower)
+            CheckShuttlePower();
     }
 
     public void PowerUpRoom(string source)
@@ -85,9 +86,7 @@ public class Room : MonoBehaviour
 
         if (source == "shuttle")
             PowerUpFromShuttle();
-
-        _localPower = true;
-
+   
         if (ConduitIsFixedOrAbsent())
             ToggleInteractables(true);
 
@@ -105,8 +104,6 @@ public class Room : MonoBehaviour
         {
             PowerDownFromShuttle();
         }
-
-        _localPower = false;
 
         if (!HasAnyPower())
             ToggleInteractables(false);
@@ -162,6 +159,8 @@ public class Room : MonoBehaviour
             foreach (var light in _roomLights)
                 light.TogglePower(true, 0.5f);
         }
+
+        _localShipPower = true;
     }
 
     private void PowerUpFromShuttle()
@@ -205,6 +204,8 @@ public class Room : MonoBehaviour
             foreach (var light in _roomLights)
                 light.TogglePower(false);
         }
+
+        _localShipPower = false;
     }
 
     private void PowerDownFromShuttle()
@@ -229,6 +230,24 @@ public class Room : MonoBehaviour
         foreach (var interactable in _interactables)
         {
             interactable.TogglePowered(toggle);
+        }
+    }
+
+    private void CheckShuttlePower()
+    {
+        var shuttlePoweredRooms = connectingRooms.Where(room => room.hasShuttlePower && room.shuttlePowerIndex < _shuttlePowerDepth);
+
+        if (shuttlePoweredRooms.Count() > 0)
+        {
+            var index = shuttlePoweredRooms.OrderBy(room => room.shuttlePowerIndex).First().shuttlePowerIndex;
+
+            if (!isCorridor)
+            {
+                index++;
+            }
+
+            shuttlePowerIndex = index;
+            PowerUpRoom("shuttle");
         }
     }
 }

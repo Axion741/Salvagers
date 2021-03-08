@@ -6,6 +6,8 @@ public class Shuttle : MonoBehaviour
 
     private Vector3 _lastPosition;
 
+    public int shuttlePowerDepth;
+
     void Start()
     {
         _lastPosition = this.transform.position;
