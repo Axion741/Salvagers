@@ -25,7 +25,7 @@ public class HardDrive : MonoBehaviour, IPointerClickHandler, IComputerComponent
     // Update is called once per frame
     void Update()
     {
-        if (_interactionDisabled || _shipSceneUIController)
+        if (_interactionDisabled || _shipSceneUIController.escapeMenuIsOpen)
         {
             if (_slider.interactable == true)
                 _slider.interactable = false;
