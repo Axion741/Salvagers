@@ -569,7 +569,7 @@ PrefabInstance:
     - target: {fileID: 1201908293337165431, guid: 8c300c96b38e0224bbafb98f5ae9531e,
         type: 3}
       propertyPath: skipToGameScene
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1201908293337165431, guid: 8c300c96b38e0224bbafb98f5ae9531e,
         type: 3}
