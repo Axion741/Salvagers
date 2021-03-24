@@ -35,8 +35,6 @@ public class Room : MonoBehaviour
 
         _roomLights = gameObject.transform.Find("RoomLights").GetComponentsInChildren<RoomLight>();
         _interactionSpots = gameObject.transform.GetComponentsInChildren<InteractionSpot>().ToList();
-        if (_interactionSpots.Count > 0)
-            PopulateInteractables();
     }
 
     // Start is called before the first frame update
@@ -44,6 +42,9 @@ public class Room : MonoBehaviour
     {
         _shipController = FindObjectOfType<ShipController>();
         _shuttlePowerDepth = FindObjectOfType<Shuttle>().shuttlePowerDepth;
+
+        if (_interactionSpots.Count > 0)
+            PopulateInteractables();
 
         if (HasAnyPower() && ConduitIsFixedOrAbsent())
         {
