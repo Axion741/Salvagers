@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private SaveController _saveController;
+
+    [SerializeField]
+    private bool _hasPrybar;
 
     public int credits;
     public int experience;
@@ -55,5 +59,10 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerName(string input)
     {
         playerName = input;
+    }
+
+    public bool hasPrybar()
+    {
+        return _hasPrybar;
     }
 }
