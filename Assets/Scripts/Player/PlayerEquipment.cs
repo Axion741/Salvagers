@@ -23,8 +23,6 @@ public class PlayerEquipment: MonoBehaviour
     private void Start()
     {
         equipmentList = new List<Equipment>();
-
-        AddEquipment(new Equipment { itemType = Equipment.ItemType.Prybar, amount = 1 });
     }
 
     public void AddEquipment(Equipment equipment)
