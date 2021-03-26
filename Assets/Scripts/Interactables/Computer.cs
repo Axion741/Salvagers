@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Minigames;
+using Assets.Scripts.Models;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
@@ -14,7 +15,7 @@ public class Computer : MonoBehaviour, IInteractable
     private GameObject[] _appropriateMinigames;
     private GameObject _selectedMinigame;
     private bool _componentMinigameSelected;
-    private string _interactionPrompt;
+    private InteractionPrompt _interactionPrompt = new InteractionPrompt();
     private bool _completed;
     
     public System.Type targetComponentType;
@@ -36,12 +37,12 @@ public class Computer : MonoBehaviour, IInteractable
         {
             _powerLight.color = Color.red;
             _monitorLight.color = Color.red;
-            _interactionPrompt = "Extract Terminal Components";
+            _interactionPrompt.Prompt = "Extract Terminal Components";
         }
         else
         {
             _powerLight.color = Color.green;
-            _interactionPrompt = "Use Terminal";
+            _interactionPrompt.Prompt = "Use Terminal";
         }
     }
 
@@ -80,7 +81,7 @@ public class Computer : MonoBehaviour, IInteractable
         }
     }
 
-    public string GetInteractionPrompt()
+    public InteractionPrompt GetInteractionPrompt()
     {
         return _interactionPrompt;
     }

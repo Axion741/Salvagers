@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Models;
 using UnityEngine;
 
 public class EngineeringConsole : MonoBehaviour, IInteractable
@@ -6,7 +7,7 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
     private ShipController _shipController;
     private SpriteRenderer _highlight;
     private Room _parentRoom;
-    private string _interactionPrompt;
+    private InteractionPrompt _interactionPrompt = new InteractionPrompt();
     private string _shutdownString = "Shut Down Ship Reactor";
     private string _startupString = "Start Up Ship Reactor";
 
@@ -22,11 +23,11 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
     {
         if (_shipController.shipPower)
         {
-            _interactionPrompt = _shutdownString;        
+            _interactionPrompt.Prompt = _shutdownString;        
         }
         else
         {
-            _interactionPrompt = _startupString;
+            _interactionPrompt.Prompt = _startupString;
         }
     }
 
@@ -41,17 +42,17 @@ public class EngineeringConsole : MonoBehaviour, IInteractable
         {
             _shipController.shipPower = !_shipController.shipPower;
             _parentRoom.PowerDownRoom("ship");
-            _interactionPrompt = _startupString;
+            _interactionPrompt.Prompt = _startupString;
         }
         else
         {
             _shipController.shipPower = !_shipController.shipPower;
             _parentRoom.PowerUpRoom("ship");
-            _interactionPrompt = _shutdownString;
+            _interactionPrompt.Prompt = _shutdownString;
         }
     }
 
-    public string GetInteractionPrompt()
+    public InteractionPrompt GetInteractionPrompt()
     {
         return _interactionPrompt;
     }

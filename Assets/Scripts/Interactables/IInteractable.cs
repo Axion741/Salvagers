@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts
+﻿using Assets.Scripts.Models;
+
+namespace Assets.Scripts
 {
     public interface IInteractable
     {
@@ -6,7 +8,7 @@
 
         void HighlightObject(bool enabled);
 
-        string GetInteractionPrompt();
+        InteractionPrompt GetInteractionPrompt();
 
         void TogglePowered(bool toggle);
     }

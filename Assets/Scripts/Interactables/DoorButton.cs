@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Models;
 using Assets.Scripts.WorldObjects;
 using UnityEngine;
 
@@ -6,10 +7,11 @@ public class DoorButton : MonoBehaviour, IInteractable
 {
     private IDoor _parent;
     private SpriteRenderer _highlight;
-    private string _interactionPrompt = "Press Door Button";
+    private InteractionPrompt  _interactionPrompt = new InteractionPrompt();
 
     private void Awake()
     {
+        _interactionPrompt.Prompt = "Press Door Button";
         this.gameObject.transform.parent.gameObject.TryGetComponent(out _parent);
         _highlight = gameObject.transform.Find("DoorPanelHighlight").GetComponent<SpriteRenderer>();
     }
@@ -24,7 +26,7 @@ public class DoorButton : MonoBehaviour, IInteractable
         _parent.ToggleDoor();
     } 
 
-    public string GetInteractionPrompt()
+    public InteractionPrompt GetInteractionPrompt()
     {
         return _interactionPrompt;
     }

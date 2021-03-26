@@ -1,20 +1,21 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Models;
 using UnityEngine;
 
 public class DoorBroken : MonoBehaviour, IInteractable
 {
     private Animator _anim;
     private SpriteRenderer _highlight;
-    private PlayerController _playerController;
+    private PlayerEquipment _playerEquipment;
     private PlayerInteraction _playerInteraction;
 
-    private string _interactionPrompt;
+    private InteractionPrompt _interactionPrompt = new InteractionPrompt();
     private bool _doorState;
 
     private void Awake()
     {
         _playerInteraction = FindObjectOfType<PlayerInteraction>();
-        _playerController = FindObjectOfType<PlayerController>();
+        _playerEquipment = FindObjectOfType<PlayerEquipment>();
         _anim = gameObject.transform.parent.GetComponent<Animator>();
         _doorState = _anim.GetBool("Open");
         _highlight = gameObject.transform.parent.Find("InteractionHalo").GetComponent<SpriteRenderer>();
@@ -36,7 +37,7 @@ public class DoorBroken : MonoBehaviour, IInteractable
 
     public void UseObject()
     {
-        if (_playerController.hasPrybar())
+        if (_playerEquipment.selectedEquipment != null && _playerEquipment.selectedEquipment.itemType == Equipment.ItemType.Prybar)
             OpenDoor();
     }
 
@@ -45,12 +46,18 @@ public class DoorBroken : MonoBehaviour, IInteractable
         _highlight.enabled = enabled;
     }
 
-    public string GetInteractionPrompt()
+    public InteractionPrompt GetInteractionPrompt()
     {
-        if (_playerController.hasPrybar())
-            _interactionPrompt = "Pry Door Open";
+        if (_playerEquipment.selectedEquipment != null && _playerEquipment.selectedEquipment.itemType == Equipment.ItemType.Prybar)
+        {
+            _interactionPrompt.Prompt = "Pry Door Open";
+            _interactionPrompt.Key = "E";
+        }
         else
-            _interactionPrompt = "Prybar Needed";
+        {
+            _interactionPrompt.Prompt = "Prybar Needed";
+            _interactionPrompt.Key = "";
+        }
 
         return _interactionPrompt;
     }

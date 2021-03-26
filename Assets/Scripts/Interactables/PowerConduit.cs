@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Models;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
@@ -10,12 +11,13 @@ public class PowerConduit : MonoBehaviour, IInteractable
     private Light2D _light;
     private Room _parentRoom;
 
-    private string _interactionPrompt = "Repair Power Conduit";
+    private InteractionPrompt _interactionPrompt = new InteractionPrompt();
 
     public bool isFixed;
 
     private void Awake()
     {
+        _interactionPrompt.Prompt = "Repair Power Conduit";
         _playerInteraction = FindObjectOfType<PlayerInteraction>();
         _highlight = gameObject.transform.Find("InteractionHalo").GetComponent<SpriteRenderer>();
 
@@ -41,7 +43,7 @@ public class PowerConduit : MonoBehaviour, IInteractable
         _playerInteraction.ClearCurrentTargetAndInteraction();
     }
 
-    public string GetInteractionPrompt()
+    public InteractionPrompt GetInteractionPrompt()
     {
         return _interactionPrompt;
     }

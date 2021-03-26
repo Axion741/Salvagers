@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Minigames;
+﻿using Assets;
+using Assets.Scripts.Minigames;
+using Assets.Scripts.Models;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -19,7 +21,7 @@ public class ShipSceneUIController : MonoBehaviour
     public Text characterNameText;
     public Text characterCreditText;
     public Text characterExperienceText;
-    public TextMeshProUGUI interactionPrompt;
+    public TextMeshProUGUI onscreenPrompt;
     public GameObject interactionPanel;
 
     // Start is called before the first frame update
@@ -83,14 +85,17 @@ public class ShipSceneUIController : MonoBehaviour
         _audioController.FadeBackgroundMusic(2, null, 0);
     }
 
-    public void SetInteractionPrompt(string key, string prompt)
+    public void SetInteractionPrompt(InteractionPrompt interactionPrompt)
     {
-        interactionPrompt.text = $"{key} - {prompt}";
+        if (HelperFunctions.IsNullOrWhiteSpace(interactionPrompt.Key))
+            onscreenPrompt.text = $"{interactionPrompt.Prompt}";
+        else
+            onscreenPrompt.text = $"{interactionPrompt.Key} - {interactionPrompt.Prompt}";
     }
 
     public void ClearInteractionPrompt()
     {
-        interactionPrompt.text = "";
+        onscreenPrompt.text = "";
     }
 
     public void ToggleInteractionPanelVisibility(bool toggle)
