@@ -11,6 +11,7 @@ public class ShipSceneUIController : MonoBehaviour
     private PlayerController _playerController;
     private SceneController _sceneController;
     private AudioController _audioController;
+    private PlayerMovement _playerMovement;
 
     private bool _characterMenuIsOpen;
 
@@ -30,6 +31,7 @@ public class ShipSceneUIController : MonoBehaviour
         _playerController = FindObjectOfType<PlayerController>();
         _sceneController = FindObjectOfType<SceneController>();
         _audioController = FindObjectOfType<AudioController>();
+        _playerMovement = FindObjectOfType<PlayerMovement>();
 
         characterNameText.text = _playerController.playerName;
         characterCreditText.text = _playerController.credits.ToString();
@@ -38,7 +40,7 @@ public class ShipSceneUIController : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale > 0 && Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && _playerMovement.playerMovementEnabled)
             ToggleCharacterMenu();
 
         if (Input.GetKeyDown(KeyCode.Escape) && escapeMenuIsOpen == false)
@@ -65,12 +67,15 @@ public class ShipSceneUIController : MonoBehaviour
             var openMinigame = FindObjectsOfType<MonoBehaviour>().OfType<IMinigame>();
 
             if (openMinigame == null || openMinigame.Count() <= 0)
-                Time.timeScale = 1;
+                _playerMovement.playerMovementEnabled = true;
+                
+            Time.timeScale = 1;
         }
             
         else
         {
             escapeMenuPanel.SetActive(true);
+            _playerMovement.playerMovementEnabled = false;
             Time.timeScale = 0;
         }
 

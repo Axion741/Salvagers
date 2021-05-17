@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _mousePosition;
     private Vector3 _currentPosition;
 
+    public bool playerMovementEnabled = true;
 
     private void Awake()
     {
@@ -34,13 +35,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var normalizedVelocity = new Vector2(_xMovement, _yMovement).normalized; //.normalized stops diagonal movement being faster
-        _rb.velocity = normalizedVelocity * moveSpeed; 
+        if (playerMovementEnabled)
+        {
+            var normalizedVelocity = new Vector2(_xMovement, _yMovement).normalized; //.normalized stops diagonal movement being faster
+            _rb.velocity = normalizedVelocity * moveSpeed; 
+        }
     }
 
     private void RotateToMouse()
     {
-        if (Time.timeScale > 0)
+        if (playerMovementEnabled)
         {
             _currentPosition = _cam.WorldToScreenPoint(transform.position);
 
@@ -53,5 +57,4 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _turnAngle));
         }
     }
-
 }

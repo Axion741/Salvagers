@@ -3,6 +3,8 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerLights : MonoBehaviour
 {
+    private PlayerMovement _playerMovement;
+
     private Light2D _suitLight;
     private Light2D _flashlight;
 
@@ -12,10 +14,15 @@ public class PlayerLights : MonoBehaviour
         _flashlight = this.transform.Find("FlashLight").GetComponent<Light2D>();
     }
 
+    private void Start()
+    {
+        _playerMovement = FindObjectOfType<PlayerMovement>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && Time.timeScale > 0)
+        if (Input.GetKeyDown(KeyCode.F) && _playerMovement.playerMovementEnabled)
         {
             ToggleLights();
         }

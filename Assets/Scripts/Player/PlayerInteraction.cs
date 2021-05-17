@@ -5,6 +5,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     private ShipSceneUIController _shipSceneUIController;
     private PlayerEquipment _playerEquipment;
+    private PlayerMovement _playerMovement;
 
     private IInteractable _currentTarget;
 
@@ -12,11 +13,12 @@ public class PlayerInteraction : MonoBehaviour
     {
         _playerEquipment = FindObjectOfType<PlayerEquipment>();
         _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
+        _playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Time.timeScale > 0)
+        if (Input.GetKeyDown(KeyCode.E) && _playerMovement.playerMovementEnabled)
         {
             if (_currentTarget != null)
             {
@@ -33,7 +35,7 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && _playerMovement.playerMovementEnabled)
         {
             _playerEquipment.TryTogglePrybar();
             UpdateInteractionPrompt();

@@ -17,11 +17,6 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
     private bool _closing = false;
     private bool _success = false;
 
-    private void Awake()
-    {
-        Time.timeScale = 0;
-    }
-
     private void Start()
     {
         _shipSceneUIController = FindObjectOfType<ShipSceneUIController>();
@@ -129,7 +124,6 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
     {
         yield return new WaitForSecondsRealtime(timescale);
 
-        Time.timeScale = 1;
         _parent.MinigameResult(_success);
         Destroy(gameObject);
 
@@ -138,7 +132,6 @@ public class ComputerPasswordMinigame : MonoBehaviour, IMinigame
     public void CloseWindow()
     {
         _closing = true;
-        Time.timeScale = 1;
 
         _parent.MinigameResult(_success);
         Destroy(gameObject);

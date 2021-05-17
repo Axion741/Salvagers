@@ -75,7 +75,6 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
     private void Awake()
     {
-        Time.timeScale = 0;
         _maxConnections = Random.Range(1, 5);
     }
 
@@ -581,8 +580,6 @@ public class ComputerUplinkMinigame : MonoBehaviour, IMinigame
 
     public void CloseWindow()
     {
-        Time.timeScale = 1;
-
         _parent.MinigameResult(_success);
         Destroy(gameObject);
     }
