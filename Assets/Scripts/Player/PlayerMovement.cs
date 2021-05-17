@@ -4,6 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _rb;
     private Camera _cam;
+    private Transform _shuttleTransform;
 
     private float moveSpeed = 5f;
     private float _xMovement;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _cam = FindObjectOfType<Camera>();
+        _shuttleTransform = FindObjectOfType<Shuttle>().transform;
     }
 
     private void Update()
@@ -55,6 +57,20 @@ public class PlayerMovement : MonoBehaviour
 
             _turnAngle = Mathf.Atan2(_mousePosition.y, _mousePosition.x) * Mathf.Rad2Deg + 90;
             transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _turnAngle));
+        }
+    }
+
+    public void ChildPlayerToShuttle(bool value)
+    {
+        var transform = this.gameObject.transform;
+
+        if (value == true)
+        {
+            transform.parent = _shuttleTransform;
+        }
+        else
+        {
+            transform.parent = null;
         }
     }
 }
