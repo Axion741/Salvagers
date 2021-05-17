@@ -11,26 +11,23 @@ public class Room : MonoBehaviour
     private List<InteractionSpot> _interactionSpots = new List<InteractionSpot>();
     private List<IInteractable> _interactables = new List<IInteractable>();
     private PowerConduit _powerConduit;
+    private SpriteGlowEffect[] _powerLines;
+    public List<Room> connectingRooms = new List<Room>();
+
     private bool _conduitFlag;
     private bool _localShipPower;
     private int _shuttlePowerDepth;
-
     private string roomDesignator;
-
-    public List<Room> connectingRooms = new List<Room>();
-    public SpriteGlowEffect[] powerLines;
-
     public bool hasShuttlePower;
     public bool isAirlock;
     public bool isCorridor;
     public string roomSpecialty;
-
     public int? shuttlePowerIndex;
 
     private void Awake()
     {
         roomDesignator = gameObject.name;
-        powerLines = gameObject.transform.Find("PowerLines").GetComponentsInChildren<SpriteGlowEffect>();
+        _powerLines = gameObject.transform.Find("PowerLines").GetComponentsInChildren<SpriteGlowEffect>();
         SetPowerLineColor(Color.red);
 
         _roomLights = gameObject.transform.Find("RoomLights").GetComponentsInChildren<RoomLight>();
@@ -119,7 +116,7 @@ public class Room : MonoBehaviour
 
     private void SetPowerLineColor(Color color)
     {
-        foreach (var line in powerLines)
+        foreach (var line in _powerLines)
             line.GlowColor = color;
     }
 
