@@ -58,6 +58,7 @@ public class FlightComputer : MonoBehaviour, IInteractable
             _shuttle.shuttleMovementEnabled = true;
             _playerMovement.playerMovementEnabled = false;
             _playerMovement.ChildPlayerToShuttle(true);
+            _shuttle.ToggleLocks(false);
         }
     }
 }

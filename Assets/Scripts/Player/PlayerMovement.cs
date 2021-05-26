@@ -67,10 +67,12 @@ public class PlayerMovement : MonoBehaviour
         if (value == true)
         {
             transform.parent = _shuttleTransform;
+            this.gameObject.AddComponent<LockToLocalPosition>();
         }
         else
         {
             transform.parent = null;
+            Destroy(this.gameObject.GetComponent<LockToLocalPosition>());
         }
     }
 }
