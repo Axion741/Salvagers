@@ -88,7 +88,7 @@ public class Room : MonoBehaviour
         if (ConduitIsFixedOrAbsent())
             ToggleInteractables(true);
 
-        Debug.Log($"{roomDesignator} Powered Up by {source}");
+        //Debug.Log($"{roomDesignator} Powered Up by {source}");
     }
 
     public void PowerDownRoom(string source)
@@ -106,7 +106,7 @@ public class Room : MonoBehaviour
         if (!HasAnyPower())
             ToggleInteractables(false);
 
-        Debug.Log($"{roomDesignator} Powered Down by {source}");
+        //Debug.Log($"{roomDesignator} Powered Down by {source}");
     }
 
     public bool HasAnyPower()

@@ -12,12 +12,14 @@ public class Shuttle : MonoBehaviour
 
     private float _xAxis;
     private float _yAxis;
+    private float maxVelocity = 4;
+    private float maxRotation = 20;
+    private float rotationSpeed = 10;
+    private float brakingForce = 3;
 
     public int shuttlePowerDepth;
     public bool shuttleMovementEnabled = false;
-    public float maxVelocity = 3;
-    public float rotationSpeed = 0.5f;
-    public float brakingForce = 3;
+    public bool shuttleDocked = false;
 
     void Start()
     {
@@ -54,25 +56,24 @@ public class Shuttle : MonoBehaviour
                 _rb.drag = 0;
                 _rb.angularDrag = 0;
             }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (_shuttleDoor.dockingAvailable)
+                    DockShuttle();
+                else
+                    Debug.Log("Cannot Dock - No Airlock in range");
+            }
         }
-
-        //var currentPos = this.transform.position;
-
-        //if (currentPos != _lastPosition)
-        //{
-        //    _shuttleDoor.doorSeal = false;
-        //}
-
-        //_lastPosition = this.transform.position;
     }
 
     private void FixedUpdate()
     {
         if (shuttleMovementEnabled)
         {
-            ThrustForward(_yAxis * 5);
+            Thrust(_yAxis * 5);
             Rotate(_xAxis * -rotationSpeed);
-            ClampVelocity(-maxVelocity);
+            ClampVelocity();
         }
     }
 
@@ -84,25 +85,28 @@ public class Shuttle : MonoBehaviour
         ToggleLocks(true);
     }
 
-    private void ThrustForward(float amount)
+    private void Thrust(float amount)
     {
         Vector2 force = transform.right * -amount;
-        Debug.Log(force);
         _rb.AddForce(force);
     }
 
-    private void ClampVelocity(float minVelocity = 0)
+    private void ClampVelocity()
     {
-        float x = Mathf.Clamp(_rb.velocity.x, minVelocity, maxVelocity);
-        float y = Mathf.Clamp(_rb.velocity.y, minVelocity, maxVelocity);
+        float x = Mathf.Clamp(_rb.velocity.x, -maxVelocity, maxVelocity);
+        float y = Mathf.Clamp(_rb.velocity.y, -maxVelocity, maxVelocity);
         var vel = new Vector2(x, y);
 
         _rb.velocity = vel;
+
+        var rot = Mathf.Clamp(_rb.angularVelocity, -maxRotation, maxRotation);
+        _rb.angularVelocity = rot;
     }
 
     private void Rotate(float amount)
     {
-        transform.Rotate(0, 0, amount);
+        //transform.Rotate(0, 0, amount);
+        _rb.AddTorque(amount);
     }
 
     public void ToggleLocks(bool value)
@@ -130,5 +134,22 @@ public class Shuttle : MonoBehaviour
     {
         _rb.drag = brakingForce;
         _rb.angularDrag = brakingForce;
+    }
+
+
+    private void DockShuttle()
+    {
+        _shuttleDoor.Dock();
+        this.transform.position = _shuttleDoor.GetDockingPosition();
+        this.transform.rotation = _shuttleDoor.GetDockingRotation();
+        shuttleDocked = true;
+        RelinquishControl();
+    }
+
+    public void UndockShuttle()
+    {
+        this.transform.position = _shuttleDoor.GetUndockingPosition();
+        _shuttleDoor.Undock();
+        shuttleDocked = false;
     }
 }

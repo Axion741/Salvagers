@@ -68,11 +68,13 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.parent = _shuttleTransform;
             this.gameObject.AddComponent<LockToLocalPosition>();
+            _cam.orthographicSize = _cam.orthographicSize * 2.5f;
         }
         else
         {
             transform.parent = null;
             Destroy(this.gameObject.GetComponent<LockToLocalPosition>());
+            _cam.orthographicSize = _cam.orthographicSize / 2.5f;
         }
     }
 }

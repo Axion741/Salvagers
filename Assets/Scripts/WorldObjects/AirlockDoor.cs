@@ -2,11 +2,11 @@
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
+//Mostly from the point of view of the Airlock Door on the Shuttle
 public class AirlockDoor : MonoBehaviour, IDoor
 {
     private ShipController _shipController;
-    private AirlockDoor _dockedDoor;
-    private Room _parentRoom;
+    private AirlockDoor _dockableDoor;
 
     private Animator _anim;
     private SpriteRenderer _doorPanel;
@@ -14,15 +14,20 @@ public class AirlockDoor : MonoBehaviour, IDoor
     private Sprite _closedPanel;
     private Light2D _panelLight;
 
+    public Room parentRoom;
+
+    private bool _doorState;
+    private Vector3 _dockingOffset = new Vector3();
+
     public bool doorSeal;
     public bool isShuttleDoor;
-    private bool _doorState;
+    public bool dockingAvailable;
 
     private void Awake()
     {
         _anim = GetComponent<Animator>();
         _doorState = _anim.GetBool("Open");
-        _parentRoom = gameObject.GetComponentInParent<Room>();
+        parentRoom = gameObject.GetComponentInParent<Room>();
     }
 
     private void Start()
@@ -40,15 +45,9 @@ public class AirlockDoor : MonoBehaviour, IDoor
 
     private void Update()
     {
-        if (_dockedDoor)
+        if (_doorState == true && doorSeal == false)
         {
-            if (!_dockedDoor.doorSeal)
-            {
-                doorSeal = false;
-                CloseDoor();
-                _dockedDoor = null;
-                _shipController.TurnOffShuttlePowerToAllRooms();
-            }
+            CloseDoor();
         }
     }
 
@@ -56,13 +55,8 @@ public class AirlockDoor : MonoBehaviour, IDoor
     {
         if (collision.tag == "Airlock")
         {
-            doorSeal = true;
-            _dockedDoor = collision.gameObject.GetComponent<AirlockDoor>();
-            if (!isShuttleDoor)
-            {
-                _parentRoom.PowerUpRoom("shuttle");
-                _parentRoom.shuttlePowerIndex = 0;
-            }
+            dockingAvailable = true;
+            _dockableDoor = collision.gameObject.GetComponent<AirlockDoor>();
         }
     }
 
@@ -86,12 +80,12 @@ public class AirlockDoor : MonoBehaviour, IDoor
     {
         if (_doorState == false && doorSeal == true)
         {
-            _dockedDoor.OpenDoor();
+            _dockableDoor.OpenDoor();
             OpenDoor();
         }
         else if (_doorState == true && doorSeal == true)
         {
-            _dockedDoor.CloseDoor();
+            _dockableDoor.CloseDoor();
             CloseDoor();
         }
         else
@@ -117,5 +111,41 @@ public class AirlockDoor : MonoBehaviour, IDoor
     public void ToggleDoorLights(bool toggle)
     {
         return;
+    }
+
+    public void Dock()
+    {
+        doorSeal = true;
+        _dockableDoor.doorSeal = true;
+        _dockingOffset = _dockableDoor.parentRoom.transform.Find("DockingOffset").transform.position;
+        _dockableDoor.parentRoom.PowerUpRoom("shuttle");
+        _dockableDoor.parentRoom.shuttlePowerIndex = 0;        
+    }
+
+    public void Undock()
+    {
+        doorSeal = false;
+        _dockableDoor.doorSeal = false;
+        CloseDoor();
+        _shipController.TurnOffShuttlePowerToAllRooms();
+        dockingAvailable = false;
+        _dockableDoor = null;
+    }
+
+    public Vector3 GetDockingPosition()
+    {
+        Debug.LogError(_dockingOffset);
+
+        return _dockingOffset;
+    }
+
+    public Quaternion GetDockingRotation()
+    {
+        return _dockableDoor.parentRoom.transform.rotation;
+    }
+
+    public Vector3 GetUndockingPosition()
+    {
+        return _dockingOffset * 1.1f;
     }
 }
