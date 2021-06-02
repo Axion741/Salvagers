@@ -134,8 +134,6 @@ public class AirlockDoor : MonoBehaviour, IDoor
 
     public Vector3 GetDockingPosition()
     {
-        Debug.LogError(_dockingOffset);
-
         return _dockingOffset;
     }
 

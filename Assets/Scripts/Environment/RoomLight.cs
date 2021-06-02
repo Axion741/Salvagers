@@ -5,6 +5,8 @@ public class RoomLight : MonoBehaviour
 {
     public Light2D lightSource;
     public bool undamageable;
+    public float damagedChance = 0.2f;
+    public float destroyedChance = 0.05f;
 
     private bool _powered;
     private bool _damaged;
@@ -37,13 +39,13 @@ public class RoomLight : MonoBehaviour
     {
         var random = Random.value; 
 
-        if (random <= 0.15)
+        if (random <= destroyedChance)
         {
             _destroyed = true;
             return;
         }
 
-        if (random >= 0.15 && random <= 0.35)
+        if (random <= damagedChance)
         {
             _damaged = true;
             lightSource.intensity = 0.25f;

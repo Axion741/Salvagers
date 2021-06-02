@@ -799,7 +799,7 @@ MonoBehaviour:
   hasShuttlePower: 0
   isAirlock: 1
   isCorridor: 0
-  roomSpecialty: 
+  roomSpecialty: airlock
 --- !u!1 &8055028499612235147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,7 +1130,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127302
+      value: -25204
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -1375,7 +1375,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127326
+      value: -25228
       objectReference: {fileID: 0}
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -1465,7 +1465,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127334
+      value: -25236
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -1625,7 +1625,7 @@ PrefabInstance:
     - target: {fileID: 7341258472189807569, guid: 305f0bbc7edf7764388998879ed63ad6,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127372
+      value: -25274
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 305f0bbc7edf7764388998879ed63ad6, type: 3}
@@ -1730,7 +1730,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127390
+      value: -25292
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -1985,7 +1985,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127410
+      value: -25312
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -2155,7 +2155,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127424
+      value: -25326
       objectReference: {fileID: 0}
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -2415,7 +2415,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127444
+      value: -25346
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -2500,7 +2500,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127452
+      value: -25354
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3110,7 +3110,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127562
+      value: -25464
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
@@ -3445,7 +3445,7 @@ PrefabInstance:
     - target: {fileID: 7600827776379802107, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
       propertyPath: m_InstanceId
-      value: -127588
+      value: -25490
       objectReference: {fileID: 0}
     - target: {fileID: 8423061502068862248, guid: c344e0a12f21715459e8fd0659e17102,
         type: 3}
