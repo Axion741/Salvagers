@@ -200,7 +200,7 @@ MonoBehaviour:
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
-  m_SelfShadows: 1
+  m_SelfShadows: 0
   m_ApplyToSortingLayers: 00000000fd76f2aad7d8466717be4e4e41d375594761beb655904257
   m_ShapePath:
   - {x: -0.1251311, y: -0.735484, z: 0}
@@ -213,7 +213,7 @@ MonoBehaviour:
   - {x: -0.12512162, y: 0.7369617, z: 0}
   m_ShapePathHash: 561505955
   m_Mesh: {fileID: 0}
-  m_InstanceId: 24160
+  m_InstanceId: 27614
 --- !u!114 &6681299961231725308
 MonoBehaviour:
   m_ObjectHideFlags: 0

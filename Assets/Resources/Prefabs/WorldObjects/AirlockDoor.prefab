@@ -310,7 +310,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d0317438fe91d479f0c778ecb65f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentRoom: {fileID: 0}
   doorSeal: 0
+  isShuttleDoor: 0
+  dockingAvailable: 0
 --- !u!1 &3224006407364858981
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +440,7 @@ MonoBehaviour:
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
-  m_SelfShadows: 1
+  m_SelfShadows: 0
   m_ApplyToSortingLayers: 00000000fd76f2aad7d8466717be4e4e41d375594761beb655904257
   m_ShapePath:
   - {x: -0.49875757, y: -0.046801537, z: 0}
@@ -446,7 +449,7 @@ MonoBehaviour:
   - {x: -0.49748892, y: 0.048355054, z: 0}
   m_ShapePathHash: 1800409272
   m_Mesh: {fileID: 0}
-  m_InstanceId: 37942
+  m_InstanceId: 37358
 --- !u!1 &5298780565457608194
 GameObject:
   m_ObjectHideFlags: 0
